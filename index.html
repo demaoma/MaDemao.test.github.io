@@ -192,6 +192,97 @@
             
             
               
+                <a class="post-title-link" href="/2014/10/31/tableview/" itemprop="url">
+                  UITableView
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2014-10-31T08:46:27+08:00" content="2014-10-31">
+              2014-10-31
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>今天写一下UITableView控件以及一个使用率非常高的视图控制器UITableViewController<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2014/10/31/tableview/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
                 <a class="post-title-link" href="/2014/10/21/first/" itemprop="url">
                   iOS开发常用控件总结
                 </a>
@@ -268,113 +359,6 @@
 
 
     
-      
-
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                <a class="post-title-link" href="/2014/10/21/tableview/" itemprop="url">
-                  iOS开发常用控件总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2014-10-21T08:46:27+08:00" content="2014-10-21">
-              2014-10-21
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>今天写一下UITableView控件以及一个使用率非常高的视图控制器UITableViewController</p>
-<h2 id="1-简介">1.简介</h2><p>UITableView经常被用来展示一系列相似的信息，有点类似于平时所见的列表，它有两种形式，一种为UITableViewStylePlain，另一种为UITableViewStyleGrouped。其实二者没有多大差别，第二种只是在第一种的基础上按分组进行显示。我们平时常用第二种形式。</p>
-<h2 id="2-初始化">2.初始化</h2><h3 id="2-1_首先在控制器中声明一个UITableView的实例">2.1 首先在控制器中声明一个UITableView的实例</h3><p><code>@property (nonatomic, strong) UITableView *tableView;</code></p>
-<h3 id="2-2_初始化，指定位置和形式">2.2 初始化，指定位置和形式</h3><pre><code><span class="keyword">self</span><span class="variable">.tableView</span> = [[<span class="built_in">UITableView</span> alloc] initWithFrame:[<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.bounds</span> style:<span class="built_in">UITableViewStyleGrouped</span>];
-
-[<span class="keyword">self</span><span class="variable">.view</span> addSubview:<span class="keyword">self</span><span class="variable">.tableView</span>];
-</code></pre><h3 id="2-3_设置代理">2.3 设置代理</h3><p>UITableView需要两个代理，分别是UITableViewDelegate和UITableViewDataSource，他们分别用来处理UITableView的事件和为UITableView来提供数据。</p>
-<p>我们把代理设置为当前的控制器</p>
-<pre><code><span class="literal">self</span>.<span class="built_in">table</span>View.delegate = <span class="literal">self</span>;
-<span class="literal">self</span>.<span class="built_in">table</span>View.dataSource = <span class="literal">self</span>;
-</code></pre><p>1 . 该方法设置UITableView的块数</p>
-<p><code>- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView;</code> </p>
-<p>该方法默认值为1，不一定必须实现，但是我比较喜欢实现它，因为符合UITableView的提供数据思路：块数-行数-每行数据</p>
-<p>2 . 该方法设置UITableView每块的行数</p>
-<p><code>- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;</code></p>
-<p>3 . 该方法返回UITableView每行的cell</p>
-<p><code>- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;</code></p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -420,14 +404,14 @@
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">1</span>
               <span class="site-state-item-name">分类</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-count">3</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

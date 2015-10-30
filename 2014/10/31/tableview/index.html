@@ -45,19 +45,16 @@
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
 
 
-<meta name="description" content="今天写一下UITableView控件以及一个使用率非常高的视图控制器UITableViewController
-1.简介UITableView经常被用来展示一系列相似的信息，有点类似于平时所见的列表，它有两种形式，一种为UITableViewStylePlain，另一种为UITableViewStyleGrouped。其实二者没有多大差别，第二种只是在第一种的基础上按分组进行显示。我们平时常用第二">
+<meta name="description" content="今天写一下UITableView控件以及一个使用率非常高的视图控制器UITableViewController">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS开发常用控件总结">
-<meta property="og:url" content="http://yoursite.com/2014/10/21/tableview/index.html">
+<meta property="og:title" content="UITableView">
+<meta property="og:url" content="http://yoursite.com/2014/10/31/tableview/index.html">
 <meta property="og:site_name" content="马德茂">
-<meta property="og:description" content="今天写一下UITableView控件以及一个使用率非常高的视图控制器UITableViewController
-1.简介UITableView经常被用来展示一系列相似的信息，有点类似于平时所见的列表，它有两种形式，一种为UITableViewStylePlain，另一种为UITableViewStyleGrouped。其实二者没有多大差别，第二种只是在第一种的基础上按分组进行显示。我们平时常用第二">
-<meta property="og:updated_time" content="2015-10-30T08:29:59.000Z">
+<meta property="og:description" content="今天写一下UITableView控件以及一个使用率非常高的视图控制器UITableViewController">
+<meta property="og:updated_time" content="2015-10-30T08:48:28.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS开发常用控件总结">
-<meta name="twitter:description" content="今天写一下UITableView控件以及一个使用率非常高的视图控制器UITableViewController
-1.简介UITableView经常被用来展示一系列相似的信息，有点类似于平时所见的列表，它有两种形式，一种为UITableViewStylePlain，另一种为UITableViewStyleGrouped。其实二者没有多大差别，第二种只是在第一种的基础上按分组进行显示。我们平时常用第二">
+<meta name="twitter:title" content="UITableView">
+<meta name="twitter:description" content="今天写一下UITableView控件以及一个使用率非常高的视图控制器UITableViewController">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -69,7 +66,7 @@
 
 
 
-  <title> iOS开发常用控件总结 | 马德茂 </title>
+  <title> UITableView | 马德茂 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -194,7 +191,7 @@
             
             
               
-                iOS开发常用控件总结
+                UITableView
               
             
           </h1>
@@ -203,8 +200,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2014-10-21T08:46:27+08:00" content="2014-10-21">
-              2014-10-21
+            <time itemprop="dateCreated" datetime="2014-10-31T08:46:27+08:00" content="2014-10-31">
+              2014-10-31
             </time>
           </span>
 
@@ -242,7 +239,7 @@
       
 
       
-        <span itemprop="articleBody"><p>今天写一下UITableView控件以及一个使用率非常高的视图控制器UITableViewController</p>
+        <span itemprop="articleBody"><p>今天写一下UITableView控件以及一个使用率非常高的视图控制器UITableViewController<br><a id="more"></a></p>
 <h2 id="1-简介">1.简介</h2><p>UITableView经常被用来展示一系列相似的信息，有点类似于平时所见的列表，它有两种形式，一种为UITableViewStylePlain，另一种为UITableViewStyleGrouped。其实二者没有多大差别，第二种只是在第一种的基础上按分组进行显示。我们平时常用第二种形式。</p>
 <h2 id="2-初始化">2.初始化</h2><h3 id="2-1_首先在控制器中声明一个UITableView的实例">2.1 首先在控制器中声明一个UITableView的实例</h3><p><code>@property (nonatomic, strong) UITableView *tableView;</code></p>
 <h3 id="2-2_初始化，指定位置和形式">2.2 初始化，指定位置和形式</h3><pre><code><span class="keyword">self</span><span class="variable">.tableView</span> = [[<span class="built_in">UITableView</span> alloc] initWithFrame:[<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.bounds</span> style:<span class="built_in">UITableViewStyleGrouped</span>];
@@ -259,6 +256,7 @@
 <p><code>- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;</code></p>
 <p>3 . 该方法返回UITableView每行的cell</p>
 <p><code>- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;</code></p>
+<h2 id="3-总结">3.总结</h2><p>这样，UITableView的基本用法就说完了，下一次再说一下其他代理方法和UITableView的编辑和移动</p>
 </span>
       
     </div>
@@ -280,13 +278,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2014/10/21/first/" rel="next" title="iOS开发常用控件总结">
+                <i class="fa fa-chevron-left"></i> iOS开发常用控件总结
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2014/10/21/first/" rel="prev" title="iOS开发常用控件总结">
-                iOS开发常用控件总结 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -358,14 +356,14 @@
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">1</span>
               <span class="site-state-item-name">分类</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-count">3</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -393,7 +391,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-简介"><span class="nav-number">1.</span> <span class="nav-text">1.简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-初始化"><span class="nav-number">2.</span> <span class="nav-text">2.初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1_首先在控制器中声明一个UITableView的实例"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 首先在控制器中声明一个UITableView的实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2_初始化，指定位置和形式"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 初始化，指定位置和形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3_设置代理"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 设置代理</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-简介"><span class="nav-number">1.</span> <span class="nav-text">1.简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-初始化"><span class="nav-number">2.</span> <span class="nav-text">2.初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1_首先在控制器中声明一个UITableView的实例"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 首先在控制器中声明一个UITableView的实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2_初始化，指定位置和形式"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 初始化，指定位置和形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3_设置代理"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 设置代理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-总结"><span class="nav-number">3.</span> <span class="nav-text">3.总结</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
