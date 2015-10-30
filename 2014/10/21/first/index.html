@@ -36,7 +36,7 @@
 
 
 
-  <meta name="keywords" content="呵呵," />
+  <meta name="keywords" content="UI,iOS,控件," />
 
 
 
@@ -45,16 +45,20 @@
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
 
 
-<meta name="description" content="as|1|2||1|1|">
+<meta name="description" content="iOS常用控件总结最近搭起博客，不写点什么总觉得对不起自己搭博客的付出，所以今天写点东西，就从iOS开发中最常用的控件开始吧。
+在iOS中，常用控件如下">
 <meta property="og:type" content="article">
-<meta property="og:title" content="first">
-<meta property="og:url" content="http://yoursite.com/2015/10/21/first/index.html">
+<meta property="og:title" content="iOS开发常用控件总结">
+<meta property="og:url" content="http://yoursite.com/2014/10/21/first/index.html">
 <meta property="og:site_name" content="马德茂">
-<meta property="og:description" content="as|1|2||1|1|">
-<meta property="og:updated_time" content="2015-10-21T02:53:11.000Z">
+<meta property="og:description" content="iOS常用控件总结最近搭起博客，不写点什么总觉得对不起自己搭博客的付出，所以今天写点东西，就从iOS开发中最常用的控件开始吧。
+在iOS中，常用控件如下">
+<meta property="og:image" content="http://yoursite.com/Image/ViewOfAll.png">
+<meta property="og:updated_time" content="2015-10-30T01:52:15.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="first">
-<meta name="twitter:description" content="as|1|2||1|1|">
+<meta name="twitter:title" content="iOS开发常用控件总结">
+<meta name="twitter:description" content="iOS常用控件总结最近搭起博客，不写点什么总觉得对不起自己搭博客的付出，所以今天写点东西，就从iOS开发中最常用的控件开始吧。
+在iOS中，常用控件如下">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -66,7 +70,7 @@
 
 
 
-  <title> first | 马德茂 </title>
+  <title> iOS开发常用控件总结 | 马德茂 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -191,7 +195,7 @@
             
             
               
-                first
+                iOS开发常用控件总结
               
             
           </h1>
@@ -200,8 +204,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-10-21T08:46:27+08:00" content="2015-10-21">
-              2015-10-21
+            <time itemprop="dateCreated" datetime="2014-10-21T08:46:27+08:00" content="2014-10-21">
+              2014-10-21
             </time>
           </span>
 
@@ -210,8 +214,8 @@
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/随笔/" itemprop="url" rel="index">
-                    <span itemprop="name">随笔</span>
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
                   </a>
                 </span>
 
@@ -239,8 +243,24 @@
       
 
       
-        <span itemprop="articleBody"><hr>
-<h2 id="as">as</h2><h2 id="|1|2|">|1|2|</h2><h2 id="|1|1|">|1|1|</h2></span>
+        <span itemprop="articleBody"><h1 id="iOS常用控件总结">iOS常用控件总结</h1><p>最近搭起博客，不写点什么总觉得对不起自己搭博客的付出，所以今天写点东西，就从iOS开发中最常用的控件开始吧。</p>
+<p>在iOS中，常用控件如下<br><a id="more"></a><br><img src="/Image/ViewOfAll.png" alt="image icon"></p>
+<h4 id="其中，有几点总结">其中，有几点总结</h4><ul>
+<li>控件的初始化原则为：如果有自己的便利构造器，则使用便利构造器，否则使用alloc init方法。</li>
+<li>UIButton和UISegmentedControl有自己的初始化方法。</li>
+<li>控件在初始化之后需要为它设置位置和大小，即设置控件的frame。其中frame包含origin(x,y)和size(width,height)。切记，控件的frame要整体赋值。</li>
+<li>UIWindow是显示UI界面最基础的控件，相当于演员表演所需的舞台，舞台不存在，那么演员再多也没有存在的意义。理论上一个应用程序只需要一个window就可以完成需求，但是在特殊情况下，可以有多个window。</li>
+<li>所有继承自UIControl的控件都可以直接发出事件，我们可以根据需要捕获并处理这些事件。</li>
+<li>所有继承自UIScrollView的控件都是可以直接滚动的。</li>
+<li>在所有的控件中，有两个控件的用户交互默认是关闭的，它们是UILabel和UIImageView。</li>
+<li>UINavigationBar和UITabBar分别是两个重要的控制器UINavigationController和UITabBarController的重要组成部分。</li>
+<li>UITableView和UICollectionView是两个最重要的信息展示控件。</li>
+</ul>
+<p>暂时想到的就这些了，以后有机会再来补充</p>
+<h3 id="补充">补充</h3><ol>
+<li>UIAlertView和UIActionSheet现在已经合并为一个控件，叫作UIAlertController。</li>
+</ol>
+</span>
       
     </div>
 
@@ -248,7 +268,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/呵呵/" rel="tag">#呵呵</a>
+            <a href="/tags/UI/" rel="tag">#UI</a>
+          
+            <a href="/tags/iOS/" rel="tag">#iOS</a>
+          
+            <a href="/tags/控件/" rel="tag">#控件</a>
           
         </div>
       
@@ -321,14 +345,14 @@
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-count">2</span>
               <span class="site-state-item-name">分类</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-count">4</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -356,7 +380,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#as"><span class="nav-number">1.</span> <span class="nav-text">as</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#|1|2|"><span class="nav-number">2.</span> <span class="nav-text">|1|2|</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#|1|1|"><span class="nav-number">3.</span> <span class="nav-text">|1|1|</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#iOS常用控件总结"><span class="nav-number">1.</span> <span class="nav-text">iOS常用控件总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#其中，有几点总结"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">其中，有几点总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#补充"><span class="nav-number">1.0.1.</span> <span class="nav-text">补充</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
