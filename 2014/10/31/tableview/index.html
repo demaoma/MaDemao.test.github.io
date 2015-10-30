@@ -51,7 +51,8 @@
 <meta property="og:url" content="http://yoursite.com/2014/10/31/tableview/index.html">
 <meta property="og:site_name" content="马德茂">
 <meta property="og:description" content="今天写一下UITableView控件以及一个使用率非常高的视图控制器UITableViewController">
-<meta property="og:updated_time" content="2015-10-30T08:54:27.000Z">
+<meta property="og:image" content="http://yoursite.com/Image/blogTableView.png">
+<meta property="og:updated_time" content="2015-10-30T09:12:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UITableView">
 <meta name="twitter:description" content="今天写一下UITableView控件以及一个使用率非常高的视图控制器UITableViewController">
@@ -256,7 +257,83 @@
 <p><code>- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;</code></p>
 <p>3 . 该方法返回UITableView每行的cell</p>
 <p><code>- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;</code></p>
-<h2 id="总结">总结</h2><p>这样，UITableView的基本用法就说完了，下一次再说一下其他代理方法和UITableView的编辑和移动</p>
+<h2 id="运行结果">运行结果</h2><p><img src="/Image/blogTableView.png" alt="image icon"></p>
+<h2 id="完整代码">完整代码</h2><pre><code><span class="preprocessor">#import <span class="title">"ViewController.h"</span></span>
+
+<span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()&lt;<span class="title">UITableViewDataSource</span>,<span class="title">UITableViewDelegate</span>&gt;</span>
+<span class="comment">//声明控件</span>
+<span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">UITableView</span> *tableView;
+
+<span class="comment">//声明存储数据的数据结构</span>
+<span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSMutableArray</span> *dataArray;
+<span class="keyword">@end</span>
+
+<span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span>
+
+- (<span class="keyword">void</span>)viewDidLoad {
+    [<span class="keyword">super</span> viewDidLoad];
+    <span class="comment">//初始化控件</span>
+    <span class="keyword">self</span><span class="variable">.tableView</span> = [[<span class="built_in">UITableView</span> alloc] initWithFrame:[<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.bounds</span> style:<span class="built_in">UITableViewStyleGrouped</span>];
+
+    [<span class="keyword">self</span><span class="variable">.view</span> addSubview:<span class="keyword">self</span><span class="variable">.tableView</span>];
+
+    <span class="comment">//设置代理</span>
+    <span class="keyword">self</span><span class="variable">.tableView</span><span class="variable">.delegate</span> = <span class="keyword">self</span>;
+    <span class="keyword">self</span><span class="variable">.tableView</span><span class="variable">.dataSource</span> = <span class="keyword">self</span>;
+
+    <span class="comment">//加载数据</span>
+    [<span class="keyword">self</span> loadData];
+}
+
+<span class="preprocessor">#pragma mark - 加载数据</span>
+- (<span class="keyword">void</span>)loadData
+{
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) {
+        <span class="built_in">NSMutableArray</span> *arrayTemp = [<span class="built_in">NSMutableArray</span> array];
+        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">4</span>; j++) {
+            <span class="built_in">NSString</span> *stringTemp = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"第%d块 第%d行"</span>, i, j];
+            [arrayTemp addObject:stringTemp];
+        }
+        [<span class="keyword">self</span><span class="variable">.dataArray</span> addObject:arrayTemp];
+    }
+}
+
+
+<span class="preprocessor">#pragma mark - UITableViewDelegate &amp; UITableViewDataSource</span>
+- (<span class="built_in">NSInteger</span>)numberOfSectionsInTableView:(<span class="built_in">UITableView</span> *)tableView
+{
+    <span class="keyword">return</span> <span class="keyword">self</span><span class="variable">.dataArray</span><span class="variable">.count</span>;
+}
+
+- (<span class="built_in">NSInteger</span>)tableView:(<span class="built_in">UITableView</span> *)tableView numberOfRowsInSection:(<span class="built_in">NSInteger</span>)section
+{
+    <span class="keyword">return</span> [[<span class="keyword">self</span><span class="variable">.dataArray</span> objectAtIndex:section] count];
+}
+
+- (<span class="built_in">UITableViewCell</span> *)tableView:(<span class="built_in">UITableView</span> *)tableView cellForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath
+{
+    <span class="keyword">static</span> <span class="built_in">NSString</span> *cell_id = <span class="string">@"cell_id"</span>;
+    <span class="built_in">UITableViewCell</span> *cell = [tableView dequeueReusableCellWithIdentifier:cell_id];
+    <span class="keyword">if</span> (cell == <span class="literal">nil</span>) {
+        cell = [[<span class="built_in">UITableViewCell</span> alloc] initWithStyle:<span class="built_in">UITableViewCellStyleDefault</span> reuseIdentifier:cell_id];
+    }
+
+    <span class="built_in">NSString</span> *stringTemp = [[<span class="keyword">self</span><span class="variable">.dataArray</span> objectAtIndex:indexPath<span class="variable">.section</span>] objectAtIndex:indexPath<span class="variable">.row</span>];
+
+    cell<span class="variable">.textLabel</span><span class="variable">.text</span> = stringTemp;
+
+    <span class="keyword">return</span> cell;
+}
+
+<span class="preprocessor">#pragma mark - 懒加载</span>
+- (<span class="built_in">NSMutableArray</span> *)dataArray
+{
+    <span class="keyword">if</span> (_dataArray == <span class="literal">nil</span>) {
+        <span class="keyword">self</span><span class="variable">.dataArray</span> = [<span class="built_in">NSMutableArray</span> array];
+    }
+    <span class="keyword">return</span> _dataArray;
+}
+</code></pre><h2 id="总结">总结</h2><p>这样，UITableView的基本用法就说完了，下一次再说一下其他代理方法和UITableView的编辑和移动</p>
 </span>
       
     </div>
@@ -391,7 +468,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化"><span class="nav-number">2.</span> <span class="nav-text">初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#首先在控制器中声明一个UITableView的实例"><span class="nav-number">2.1.</span> <span class="nav-text">首先在控制器中声明一个UITableView的实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化，指定位置和形式"><span class="nav-number">2.2.</span> <span class="nav-text">初始化，指定位置和形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置代理"><span class="nav-number">2.3.</span> <span class="nav-text">设置代理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化"><span class="nav-number">2.</span> <span class="nav-text">初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#首先在控制器中声明一个UITableView的实例"><span class="nav-number">2.1.</span> <span class="nav-text">首先在控制器中声明一个UITableView的实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化，指定位置和形式"><span class="nav-number">2.2.</span> <span class="nav-text">初始化，指定位置和形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置代理"><span class="nav-number">2.3.</span> <span class="nav-text">设置代理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行结果"><span class="nav-number">3.</span> <span class="nav-text">运行结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整代码"><span class="nav-number">4.</span> <span class="nav-text">完整代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
