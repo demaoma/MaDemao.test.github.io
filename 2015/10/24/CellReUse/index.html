@@ -45,17 +45,25 @@
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
 
 
-<meta name="description" content="今天写一下UITableView控件以及一个使用率非常高的视图控制器UITableViewController">
+<meta name="description" content="在UITableView中，我们通常来展示各色各样的信息，这时，系统自带的cell形式就无法满足我们的需求了。此时，我们就需要用到自定义cell。
+自定义cell自定义的cell继承自UITableViewCell，同时，我们一般会声明一个模型类型的属性，我们通过重写这个属性的setter方法来对自定义cell上的控件进行UI展示。自定义cell代码如下：
+.h文件中
+#import &amp;lt;UI">
 <meta property="og:type" content="article">
-<meta property="og:title" content="UITableView">
-<meta property="og:url" content="http://yoursite.com/2014/10/22/tableview/index.html">
+<meta property="og:title" content="UITableView 中 cell 的自定义以及重用">
+<meta property="og:url" content="http://yoursite.com/2015/10/24/CellReUse/index.html">
 <meta property="og:site_name" content="马德茂">
-<meta property="og:description" content="今天写一下UITableView控件以及一个使用率非常高的视图控制器UITableViewController">
-<meta property="og:image" content="http://yoursite.com/Image/blogTableView.png">
-<meta property="og:updated_time" content="2015-10-30T09:16:29.000Z">
+<meta property="og:description" content="在UITableView中，我们通常来展示各色各样的信息，这时，系统自带的cell形式就无法满足我们的需求了。此时，我们就需要用到自定义cell。
+自定义cell自定义的cell继承自UITableViewCell，同时，我们一般会声明一个模型类型的属性，我们通过重写这个属性的setter方法来对自定义cell上的控件进行UI展示。自定义cell代码如下：
+.h文件中
+#import &amp;lt;UI">
+<meta property="og:updated_time" content="2015-10-31T03:46:28.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="UITableView">
-<meta name="twitter:description" content="今天写一下UITableView控件以及一个使用率非常高的视图控制器UITableViewController">
+<meta name="twitter:title" content="UITableView 中 cell 的自定义以及重用">
+<meta name="twitter:description" content="在UITableView中，我们通常来展示各色各样的信息，这时，系统自带的cell形式就无法满足我们的需求了。此时，我们就需要用到自定义cell。
+自定义cell自定义的cell继承自UITableViewCell，同时，我们一般会声明一个模型类型的属性，我们通过重写这个属性的setter方法来对自定义cell上的控件进行UI展示。自定义cell代码如下：
+.h文件中
+#import &amp;lt;UI">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -67,7 +75,7 @@
 
 
 
-  <title> UITableView | 马德茂 </title>
+  <title> UITableView 中 cell 的自定义以及重用 | 马德茂 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -192,7 +200,7 @@
             
             
               
-                UITableView
+                UITableView 中 cell 的自定义以及重用
               
             
           </h1>
@@ -201,8 +209,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2014-10-22T08:46:27+08:00" content="2014-10-22">
-              2014-10-22
+            <time itemprop="dateCreated" datetime="2015-10-24T11:26:00+08:00" content="2015-10-24">
+              2015-10-24
             </time>
           </span>
 
@@ -240,25 +248,93 @@
       
 
       
-        <span itemprop="articleBody"><p>今天写一下UITableView控件以及一个使用率非常高的视图控制器UITableViewController<br><a id="more"></a></p>
-<h2 id="简介">简介</h2><p>UITableView经常被用来展示一系列相似的信息，有点类似于平时所见的列表，它有两种形式，一种为UITableViewStylePlain，另一种为UITableViewStyleGrouped。其实二者没有多大差别，第二种只是在第一种的基础上按分组进行显示。我们平时常用第二种形式。</p>
-<h2 id="初始化">初始化</h2><h3 id="首先在控制器中声明一个UITableView的实例">首先在控制器中声明一个UITableView的实例</h3><p><code>@property (nonatomic, strong) UITableView *tableView;</code></p>
-<h3 id="初始化，指定位置和形式">初始化，指定位置和形式</h3><pre><code><span class="keyword">self</span><span class="variable">.tableView</span> = [[<span class="built_in">UITableView</span> alloc] initWithFrame:[<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.bounds</span> style:<span class="built_in">UITableViewStyleGrouped</span>];
+        <span itemprop="articleBody"><p>在UITableView中，我们通常来展示各色各样的信息，这时，系统自带的cell形式就无法满足我们的需求了。此时，我们就需要用到自定义cell。</p>
+<h1 id="自定义cell">自定义cell</h1><p>自定义的cell继承自UITableViewCell，同时，我们一般会声明一个模型类型的属性，我们通过重写这个属性的setter方法来对自定义cell上的控件进行UI展示。<br>自定义cell代码如下：</p>
+<p>.h文件中</p>
+<pre><code><span class="preprocessor">#import <span class="title">&lt;UIKit/UIKit.h&gt;</span></span>
 
-[<span class="keyword">self</span><span class="variable">.view</span> addSubview:<span class="keyword">self</span><span class="variable">.tableView</span>];
-</code></pre><h3 id="设置代理">设置代理</h3><p>UITableView需要两个代理，分别是UITableViewDelegate和UITableViewDataSource，他们分别用来处理UITableView的事件和为UITableView来提供数据。</p>
-<p>我们把代理设置为当前的控制器</p>
-<pre><code><span class="literal">self</span>.<span class="built_in">table</span>View.delegate = <span class="literal">self</span>;
-<span class="literal">self</span>.<span class="built_in">table</span>View.dataSource = <span class="literal">self</span>;
-</code></pre><p>1 . 该方法设置UITableView的块数</p>
-<p><code>- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView;</code> </p>
-<p>该方法默认值为1，不一定必须实现，但是我比较喜欢实现它，因为符合UITableView的提供数据思路：块数-行数-每行数据</p>
-<p>2 . 该方法设置UITableView每块的行数</p>
-<p><code>- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;</code></p>
-<p>3 . 该方法返回UITableView每行的cell</p>
-<p><code>- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;</code></p>
-<h2 id="运行结果">运行结果</h2><p><img src="/Image/blogTableView.png" alt="image icon"></p>
-<h2 id="完整代码">完整代码</h2><pre><code><span class="preprocessor">#import <span class="title">"ViewController.h"</span></span>
+<span class="class"><span class="keyword">@interface</span> <span class="title">CustomCell</span> : <span class="title">UITableViewCell</span></span>
+
+<span class="comment">//通常在cell中暴露一个属性接口，通过重写它的setter方法来完成对cell UI的布局。</span>
+<span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *stringModel;
+
+<span class="keyword">@end</span>
+</code></pre><p>.m文件中</p>
+<pre><code><span class="preprocessor">#import <span class="title">"CustomCell.h"</span></span>
+
+<span class="class"><span class="keyword">@interface</span> <span class="title">CustomCell</span> ()</span>
+
+<span class="comment">//自定义cell所需展示的控件</span>
+<span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">UILabel</span> *stringLabel;
+
+<span class="keyword">@end</span>
+
+<span class="class"><span class="keyword">@implementation</span> <span class="title">CustomCell</span></span>
+
+- (instancetype)initWithStyle:(<span class="built_in">UITableViewCellStyle</span>)style reuseIdentifier:(<span class="built_in">NSString</span> *)reuseIdentifier
+{
+    <span class="keyword">if</span> (<span class="keyword">self</span> = [<span class="keyword">super</span> initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        <span class="keyword">self</span><span class="variable">.stringLabel</span> = [[<span class="built_in">UILabel</span> alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">20</span>, <span class="number">0</span>, <span class="number">150</span>, <span class="number">30</span>)];
+        <span class="keyword">self</span><span class="variable">.stringLabel</span><span class="variable">.textColor</span> = [<span class="built_in">UIColor</span> redColor];
+        [<span class="keyword">self</span><span class="variable">.contentView</span> addSubview:<span class="keyword">self</span><span class="variable">.stringLabel</span>];
+    }
+    <span class="keyword">return</span> <span class="keyword">self</span>;
+}
+
+- (<span class="keyword">void</span>)setStringModel:(<span class="built_in">NSString</span> *)stringModel
+{
+    <span class="keyword">self</span><span class="variable">.stringLabel</span><span class="variable">.text</span> = stringModel;
+}
+
+<span class="keyword">@end</span>
+</code></pre><h1 id="cell的重用">cell的重用</h1><p>自定义cell很简单，但是怎么使用它才是最重要的。我们知道，UITableView会展示大量的数据，如果展示的数据过多的话，每条数据都会需要一个cell，这样就加大了内存的消耗。幸运的是，UITableView带有cell重用机制，通过cell的重新利用，最大程度的减小了cell的创建，从而减少内存的消耗。</p>
+<p>现在推荐使用注册的方式来完成cell的重用。该机制首先将一个cell实例放入一个缓存池中，然后UITableView在需要cell时，首先从缓存池中通过注册cell时的reuseid来找寻相同类型的cell，如果找到cell，则使用它，如果没有找到，则创建cell。一个cell在屏幕中不展示后，cell会被重新放回缓存池中。这样就达到了重用的效果。</p>
+<h2 id="cell的注册">cell的注册</h2><pre><code>[<span class="literal">self</span>.<span class="built_in">table</span>View registerClass:[CustomCell class] <span class="keyword">for</span>CellReuseIdentifier:@<span class="string">"CustomCell"</span>];
+</code></pre><h2 id="cell的使用">cell的使用</h2><pre><code>CustomCell *cell = [tableView <span class="string">dequeueReusableCellWithIdentifier:</span>@<span class="string">"CustomCell"</span> <span class="string">forIndexPath:</span>indexPath];
+
+NSString *stringTemp = [[self.dataArray <span class="string">objectAtIndex:</span>indexPath.section] <span class="string">objectAtIndex:</span>indexPath.row];
+
+cell.stringModel = stringTemp;
+
+<span class="keyword">return</span> cell;
+</code></pre><h1 id="总结">总结</h1><p>通过三篇博文，把UITableView的最常用的方法介绍了一遍，下面贴出源码。</p>
+<h2 id="自定义cell-h文件">自定义cell.h文件</h2><pre><code><span class="preprocessor">#import <span class="title">&lt;UIKit/UIKit.h&gt;</span></span>
+
+<span class="class"><span class="keyword">@interface</span> <span class="title">CustomCell</span> : <span class="title">UITableViewCell</span></span>
+
+<span class="comment">//通常在cell中暴露一个属性接口，通过重写它的setter方法来完成对cell UI的布局。</span>
+<span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *stringModel;
+
+<span class="keyword">@end</span>
+</code></pre><h2 id="自定义cell-m文件">自定义cell.m文件</h2><pre><code><span class="preprocessor">#import <span class="title">"CustomCell.h"</span></span>
+
+<span class="class"><span class="keyword">@interface</span> <span class="title">CustomCell</span> ()</span>
+
+<span class="comment">//自定义cell所需展示的控件</span>
+<span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">UILabel</span> *stringLabel;
+
+<span class="keyword">@end</span>
+
+<span class="class"><span class="keyword">@implementation</span> <span class="title">CustomCell</span></span>
+
+- (instancetype)initWithStyle:(<span class="built_in">UITableViewCellStyle</span>)style reuseIdentifier:(<span class="built_in">NSString</span> *)reuseIdentifier
+{
+    <span class="keyword">if</span> (<span class="keyword">self</span> = [<span class="keyword">super</span> initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        <span class="keyword">self</span><span class="variable">.stringLabel</span> = [[<span class="built_in">UILabel</span> alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">20</span>, <span class="number">0</span>, <span class="number">150</span>, <span class="number">30</span>)];
+        <span class="keyword">self</span><span class="variable">.stringLabel</span><span class="variable">.textColor</span> = [<span class="built_in">UIColor</span> redColor];
+        [<span class="keyword">self</span><span class="variable">.contentView</span> addSubview:<span class="keyword">self</span><span class="variable">.stringLabel</span>];
+    }
+    <span class="keyword">return</span> <span class="keyword">self</span>;
+}
+
+- (<span class="keyword">void</span>)setStringModel:(<span class="built_in">NSString</span> *)stringModel
+{
+    <span class="keyword">self</span><span class="variable">.stringLabel</span><span class="variable">.text</span> = stringModel;
+}
+
+<span class="keyword">@end</span>
+</code></pre><h2 id="ViewController-m文件">ViewController.m文件</h2><pre><code><span class="preprocessor">#import <span class="title">"ViewController.h"</span></span>
+<span class="preprocessor">#import <span class="title">"CustomCell.h"</span></span>
 
 <span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()&lt;<span class="title">UITableViewDataSource</span>,<span class="title">UITableViewDelegate</span>&gt;</span>
 <span class="comment">//声明控件</span>
@@ -273,9 +349,14 @@
 - (<span class="keyword">void</span>)viewDidLoad {
     [<span class="keyword">super</span> viewDidLoad];
     <span class="comment">//初始化控件</span>
-    <span class="keyword">self</span><span class="variable">.tableView</span> = [[<span class="built_in">UITableView</span> alloc] initWithFrame:[<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.bounds</span> style:<span class="built_in">UITableViewStyleGrouped</span>];
+    <span class="built_in">CGRect</span> frame = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">64</span>, [<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.width</span>, [<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.height</span>);
+
+    <span class="keyword">self</span><span class="variable">.tableView</span> = [[<span class="built_in">UITableView</span> alloc] initWithFrame:frame style:<span class="built_in">UITableViewStyleGrouped</span>];
+
+    [<span class="keyword">self</span><span class="variable">.tableView</span> registerClass:[CustomCell class] forCellReuseIdentifier:<span class="string">@"CustomCell"</span>];
 
     [<span class="keyword">self</span><span class="variable">.view</span> addSubview:<span class="keyword">self</span><span class="variable">.tableView</span>];
+
 
     <span class="comment">//设置代理</span>
     <span class="keyword">self</span><span class="variable">.tableView</span><span class="variable">.delegate</span> = <span class="keyword">self</span>;
@@ -283,6 +364,20 @@
 
     <span class="comment">//加载数据</span>
     [<span class="keyword">self</span> loadData];
+
+    <span class="comment">//创建用来改变编辑状态的按钮</span>
+    <span class="keyword">self</span><span class="variable">.navigationItem</span><span class="variable">.rightBarButtonItem</span> = [[<span class="built_in">UIBarButtonItem</span> alloc] initWithTitle:<span class="string">@"编辑"</span> style:<span class="built_in">UIBarButtonItemStylePlain</span> target:<span class="keyword">self</span> action:<span class="keyword">@selector</span>(rightBtnAction:)];
+}
+
+<span class="preprocessor">#pragma mark - 按钮事件 </span>
+- (<span class="keyword">void</span>)rightBtnAction:(<span class="built_in">UIBarButtonItem</span> *)sender
+{
+    <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.tableView</span><span class="variable">.editing</span> == <span class="literal">YES</span>) {
+        <span class="keyword">self</span><span class="variable">.navigationItem</span><span class="variable">.rightBarButtonItem</span><span class="variable">.title</span> = <span class="string">@"编辑"</span>;
+    }<span class="keyword">else</span>{
+        <span class="keyword">self</span><span class="variable">.navigationItem</span><span class="variable">.rightBarButtonItem</span><span class="variable">.title</span> = <span class="string">@"完成"</span>;
+    }
+    <span class="keyword">self</span><span class="variable">.tableView</span><span class="variable">.editing</span> = !<span class="keyword">self</span><span class="variable">.tableView</span><span class="variable">.editing</span>;
 }
 
 <span class="preprocessor">#pragma mark - 加载数据</span>
@@ -312,17 +407,58 @@
 
 - (<span class="built_in">UITableViewCell</span> *)tableView:(<span class="built_in">UITableView</span> *)tableView cellForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath
 {
-    <span class="keyword">static</span> <span class="built_in">NSString</span> *cell_id = <span class="string">@"cell_id"</span>;
-    <span class="built_in">UITableViewCell</span> *cell = [tableView dequeueReusableCellWithIdentifier:cell_id];
-    <span class="keyword">if</span> (cell == <span class="literal">nil</span>) {
-        cell = [[<span class="built_in">UITableViewCell</span> alloc] initWithStyle:<span class="built_in">UITableViewCellStyleDefault</span> reuseIdentifier:cell_id];
-    }
+    CustomCell *cell = [tableView dequeueReusableCellWithIdentifier:<span class="string">@"CustomCell"</span> forIndexPath:indexPath];
 
     <span class="built_in">NSString</span> *stringTemp = [[<span class="keyword">self</span><span class="variable">.dataArray</span> objectAtIndex:indexPath<span class="variable">.section</span>] objectAtIndex:indexPath<span class="variable">.row</span>];
 
-    cell<span class="variable">.textLabel</span><span class="variable">.text</span> = stringTemp;
+    cell<span class="variable">.stringModel</span> = stringTemp;
 
     <span class="keyword">return</span> cell;
+}
+
+- (<span class="built_in">BOOL</span>)tableView:(<span class="built_in">UITableView</span> *)tableView canEditRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath
+{
+    <span class="keyword">return</span> <span class="literal">YES</span>;
+}
+
+- (<span class="built_in">UITableViewCellEditingStyle</span>)tableView:(<span class="built_in">UITableView</span> *)tableView editingStyleForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath
+{
+    <span class="keyword">return</span> <span class="built_in">UITableViewCellEditingStyleDelete</span>;
+}
+
+- (<span class="keyword">void</span>)tableView:(<span class="built_in">UITableView</span> *)tableView commitEditingStyle:(<span class="built_in">UITableViewCellEditingStyle</span>)editingStyle forRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath
+{
+    <span class="comment">//该条数据是这个块中最后一条数据</span>
+    <span class="keyword">if</span> ([[<span class="keyword">self</span><span class="variable">.dataArray</span> objectAtIndex:indexPath<span class="variable">.section</span>] count] == <span class="number">1</span>) {
+        <span class="comment">//删除数据</span>
+        [<span class="keyword">self</span><span class="variable">.dataArray</span> removeObjectAtIndex:indexPath<span class="variable">.section</span>];
+        <span class="comment">//更新页面</span>
+        <span class="built_in">NSIndexSet</span> *set = [<span class="built_in">NSIndexSet</span> indexSetWithIndex:indexPath<span class="variable">.section</span>];
+        [<span class="keyword">self</span><span class="variable">.tableView</span> deleteSections:set withRowAnimation:<span class="built_in">UITableViewRowAnimationRight</span>];
+    }<span class="keyword">else</span>{
+        <span class="comment">//删除数据</span>
+        [[<span class="keyword">self</span><span class="variable">.dataArray</span> objectAtIndex:indexPath<span class="variable">.section</span>] removeObjectAtIndex:indexPath<span class="variable">.row</span>];
+    <span class="comment">//更新页面</span>
+    [<span class="keyword">self</span><span class="variable">.tableView</span> deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:<span class="built_in">UITableViewRowAnimationRight</span>];
+    }
+}
+
+- (<span class="built_in">BOOL</span>)tableView:(<span class="built_in">UITableView</span> *)tableView canMoveRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath
+{
+    <span class="keyword">return</span> <span class="literal">YES</span>;
+}
+
+- (<span class="keyword">void</span>)tableView:(<span class="built_in">UITableView</span> *)tableView moveRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)sourceIndexPath toIndexPath:(<span class="built_in">NSIndexPath</span> *)destinationIndexPath
+{
+    <span class="built_in">NSString</span> *stringTemp = [[<span class="keyword">self</span><span class="variable">.dataArray</span> objectAtIndex:sourceIndexPath<span class="variable">.section</span>] objectAtIndex:sourceIndexPath<span class="variable">.row</span>];
+
+    [[<span class="keyword">self</span><span class="variable">.dataArray</span> objectAtIndex:sourceIndexPath<span class="variable">.section</span>] removeObjectAtIndex:sourceIndexPath<span class="variable">.row</span>];
+    [[<span class="keyword">self</span><span class="variable">.dataArray</span> objectAtIndex:destinationIndexPath<span class="variable">.section</span>] insertObject:stringTemp atIndex:destinationIndexPath<span class="variable">.row</span>];
+
+    <span class="keyword">if</span> ([[<span class="keyword">self</span><span class="variable">.dataArray</span> objectAtIndex:sourceIndexPath<span class="variable">.section</span>] count] == <span class="number">0</span>) {
+        [<span class="keyword">self</span><span class="variable">.dataArray</span> removeObjectAtIndex:sourceIndexPath<span class="variable">.section</span>];
+        [<span class="keyword">self</span><span class="variable">.tableView</span> reloadData];
+    }
 }
 
 <span class="preprocessor">#pragma mark - 懒加载</span>
@@ -333,8 +469,9 @@
     }
     <span class="keyword">return</span> _dataArray;
 }
-</code></pre><h2 id="总结">总结</h2><p>这样，UITableView的基本用法就说完了，下一次再说一下其他代理方法和UITableView的编辑和移动</p>
-</span>
+
+<span class="keyword">@end</span>
+</code></pre></span>
       
     </div>
 
@@ -355,17 +492,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2014/10/21/first/" rel="next" title="iOS开发常用控件总结">
-                <i class="fa fa-chevron-left"></i> iOS开发常用控件总结
+              <a href="/2014/10/23/tableViewEditAndMove/" rel="next" title="UITableView的编辑和移动">
+                <i class="fa fa-chevron-left"></i> UITableView的编辑和移动
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2014/10/23/tableViewEditAndMove/" rel="prev" title="UITableView的编辑和移动">
-                UITableView的编辑和移动 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -472,7 +605,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化"><span class="nav-number">2.</span> <span class="nav-text">初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#首先在控制器中声明一个UITableView的实例"><span class="nav-number">2.1.</span> <span class="nav-text">首先在控制器中声明一个UITableView的实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化，指定位置和形式"><span class="nav-number">2.2.</span> <span class="nav-text">初始化，指定位置和形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置代理"><span class="nav-number">2.3.</span> <span class="nav-text">设置代理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行结果"><span class="nav-number">3.</span> <span class="nav-text">运行结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整代码"><span class="nav-number">4.</span> <span class="nav-text">完整代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义cell"><span class="nav-number">1.</span> <span class="nav-text">自定义cell</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cell的重用"><span class="nav-number">2.</span> <span class="nav-text">cell的重用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cell的注册"><span class="nav-number">2.1.</span> <span class="nav-text">cell的注册</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cell的使用"><span class="nav-number">2.2.</span> <span class="nav-text">cell的使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义cell-h文件"><span class="nav-number">3.1.</span> <span class="nav-text">自定义cell.h文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义cell-m文件"><span class="nav-number">3.2.</span> <span class="nav-text">自定义cell.m文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ViewController-m文件"><span class="nav-number">3.3.</span> <span class="nav-text">ViewController.m文件</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
