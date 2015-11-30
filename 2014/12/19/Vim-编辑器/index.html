@@ -36,7 +36,7 @@
 
 
 
-  <meta name="keywords" content="UI,iOS,控件," />
+  <meta name="keywords" content="Vim 编辑器," />
 
 
 
@@ -45,16 +45,20 @@
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
 
 
-<meta name="description" content="上一篇记录了UITableView基本的用法，包括创建、设置代理以及代理方法的实现。这一篇来记录一下UITableView的编辑和移动。">
+<meta name="description" content="vm(vim)简介
+vi(vim)是上Linux非常常用的编辑器，很多Linux发行版都默认安装了vi(vim)。vi(vim)命令繁多但是如果使用灵活之后将会大大提高效率。vi是“visual interface”的缩写，vim是vi IMproved(增强版的vi)。在一般的系统管理维护中vi就够用，如果想使用代码加亮的话可以使用vim。下面是vi的使用教程：包含vi的基本介绍、使用模式、文件">
 <meta property="og:type" content="article">
-<meta property="og:title" content="UITableView的编辑和移动">
-<meta property="og:url" content="http://yoursite.com/2014/10/23/tableViewEditAndMove/index.html">
+<meta property="og:title" content="Vim 编辑器">
+<meta property="og:url" content="http://yoursite.com/2014/12/19/Vim-编辑器/index.html">
 <meta property="og:site_name" content="马德茂">
-<meta property="og:description" content="上一篇记录了UITableView基本的用法，包括创建、设置代理以及代理方法的实现。这一篇来记录一下UITableView的编辑和移动。">
-<meta property="og:updated_time" content="2015-10-31T01:52:10.000Z">
+<meta property="og:description" content="vm(vim)简介
+vi(vim)是上Linux非常常用的编辑器，很多Linux发行版都默认安装了vi(vim)。vi(vim)命令繁多但是如果使用灵活之后将会大大提高效率。vi是“visual interface”的缩写，vim是vi IMproved(增强版的vi)。在一般的系统管理维护中vi就够用，如果想使用代码加亮的话可以使用vim。下面是vi的使用教程：包含vi的基本介绍、使用模式、文件">
+<meta property="og:image" content="http://www.dzsc.com/news/uploadfile/2011525141834429.jpg">
+<meta property="og:updated_time" content="2015-11-29T11:49:24.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="UITableView的编辑和移动">
-<meta name="twitter:description" content="上一篇记录了UITableView基本的用法，包括创建、设置代理以及代理方法的实现。这一篇来记录一下UITableView的编辑和移动。">
+<meta name="twitter:title" content="Vim 编辑器">
+<meta name="twitter:description" content="vm(vim)简介
+vi(vim)是上Linux非常常用的编辑器，很多Linux发行版都默认安装了vi(vim)。vi(vim)命令繁多但是如果使用灵活之后将会大大提高效率。vi是“visual interface”的缩写，vim是vi IMproved(增强版的vi)。在一般的系统管理维护中vi就够用，如果想使用代码加亮的话可以使用vim。下面是vi的使用教程：包含vi的基本介绍、使用模式、文件">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -66,7 +70,7 @@
 
 
 
-  <title> UITableView的编辑和移动 | 马德茂 </title>
+  <title> Vim 编辑器 | 马德茂 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -191,7 +195,7 @@
             
             
               
-                UITableView的编辑和移动
+                Vim 编辑器
               
             
           </h1>
@@ -200,8 +204,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2014-10-23T17:15:08+08:00" content="2014-10-23">
-              2014-10-23
+            <time itemprop="dateCreated" datetime="2014-12-19T13:25:19+08:00" content="2014-12-19">
+              2014-12-19
             </time>
           </span>
 
@@ -210,8 +214,8 @@
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS</span>
+                  <a href="/categories/兴趣篇/" itemprop="url" rel="index">
+                    <span itemprop="name">兴趣篇</span>
                   </a>
                 </span>
 
@@ -239,79 +243,129 @@
       
 
       
-        <span itemprop="articleBody"><p>上一篇记录了UITableView基本的用法，包括创建、设置代理以及代理方法的实现。这一篇来记录一下UITableView的编辑和移动。<br><a id="more"></a></p>
-<h1 id="编辑">编辑</h1><p>因为数据的操作一般指的是增删改查，所以编辑操作一般值得是对数据的删除。</p>
-<p>删除一般分为以下几步：</p>
-<ol>
-<li>编辑当前页面为可编辑状态。注：即使当前页面为不可编辑状态，也可左滑拉出删除按钮。</li>
-<li>确定可以编辑的行数。</li>
-<li>确定编辑类型。</li>
-<li>处理编辑事件。</li>
-</ol>
-<h2 id="*_编辑当前页面为可编辑状态">* 编辑当前页面为可编辑状态</h2><p>为了能够改变页面的编辑状态，我们在页面右上角加上一个按钮，用来改变页面的编辑状态。在此之前，我们要在storyboard中Controller对应的页面上包上一层Navigation。</p>
-<pre><code>self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] <span class="string">initWithTitle:</span>@<span class="string">"编辑"</span> <span class="string">style:</span>UIBarButtonItemStylePlain <span class="string">target:</span>self <span class="string">action:</span><span class="annotation">@selector</span>(<span class="string">rightBtnAction:</span>)];
-</code></pre><p>按钮事件为：</p>
-<pre><code>- (<span class="keyword">void</span>)rightBtnAction:(<span class="built_in">UIBarButtonItem</span> *)sender
-{
-    <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.tableView</span><span class="variable">.editing</span> == <span class="literal">YES</span>) {
-        <span class="keyword">self</span><span class="variable">.navigationItem</span><span class="variable">.rightBarButtonItem</span><span class="variable">.title</span> = <span class="string">@"编辑"</span>;
-    }<span class="keyword">else</span>{
-        <span class="keyword">self</span><span class="variable">.navigationItem</span><span class="variable">.rightBarButtonItem</span><span class="variable">.title</span> = <span class="string">@"完成"</span>;
-    }
-    <span class="keyword">self</span><span class="variable">.tableView</span><span class="variable">.editing</span> = !<span class="keyword">self</span><span class="variable">.tableView</span><span class="variable">.editing</span>;
-}
-</code></pre><h2 id="*_确定可以编辑的行数">* 确定可以编辑的行数</h2><p>可以根据条件返回YES/NO。我们这里设置为全部可以编辑。</p>
-<pre><code>- (<span class="built_in">BOOL</span>)tableView:(<span class="built_in">UITableView</span> *)tableView canEditRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath
-{
-    <span class="keyword">return</span> <span class="literal">YES</span>;
-}
-</code></pre><h2 id="*_确定编辑类型">* 确定编辑类型</h2><p>我们一般设置为删除。</p>
-<pre><code>- (<span class="built_in">UITableViewCellEditingStyle</span>)tableView:(<span class="built_in">UITableView</span> *)tableView editingStyleForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath
-{
-    <span class="keyword">return</span> <span class="built_in">UITableViewCellEditingStyleDelete</span>;
-}
-</code></pre><h2 id="*_处理编辑事件">* 处理编辑事件</h2><p><code>在处理事件时，一定要注意数据和界面保持一致，否则会崩溃</code></p>
-<pre><code>- (<span class="typename">void</span>)<span class="string">tableView:</span>(UITableView *)tableView <span class="string">commitEditingStyle:</span>(UITableViewCellEditingStyle)editingStyle <span class="string">forRowAtIndexPath:</span>(NSIndexPath *)indexPath
-{
-    <span class="comment">//该条数据是这个块中最后一条数据</span>
-    <span class="keyword">if</span> ([[self.dataArray <span class="string">objectAtIndex:</span>indexPath.section] count] == <span class="number">1</span>) {
-        <span class="comment">//删除数据</span>
-        [self.dataArray <span class="string">removeObjectAtIndex:</span>indexPath.section];
-        <span class="comment">//更新页面</span>
-        NSIndexSet *set = [NSIndexSet <span class="string">indexSetWithIndex:</span>indexPath.section];
-        [self.tableView <span class="string">deleteSections:</span>set <span class="string">withRowAnimation:</span>UITableViewRowAnimationRight];
-    }<span class="keyword">else</span>{
-        <span class="comment">//删除数据</span>
-        [[self.dataArray <span class="string">objectAtIndex:</span>indexPath.section] <span class="string">removeObjectAtIndex:</span>indexPath.row];
-        <span class="comment">//更新页面</span>
-        [self.tableView <span class="string">deleteRowsAtIndexPaths:</span>@[indexPath] <span class="string">withRowAnimation:</span>UITableViewRowAnimationRight];
-    }
-}
-</code></pre><h1 id="移动">移动</h1><p>移动有跨块移动和不跨块移动，我这里把两种情况写在了一起。</p>
-<p>同样的，移动也是分步骤的，步骤如下：</p>
-<ol>
-<li>设置页面为编辑状态。</li>
-<li>确定每行是否可以移动。</li>
-<li>处理移动事件</li>
-</ol>
-<h2 id="*_设置页面为编辑状态">* 设置页面为编辑状态</h2><p>同编辑过程中的第一步</p>
-<h2 id="*_确定每行是否可以移动">* 确定每行是否可以移动</h2><pre><code>- (<span class="built_in">BOOL</span>)tableView:(<span class="built_in">UITableView</span> *)tableView canMoveRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath
-{
-    <span class="keyword">return</span> <span class="literal">YES</span>;
-}
-</code></pre><h2 id="*_处理移动事件">* 处理移动事件</h2><pre><code>- (void)tableView:(UITableView *)tableView <span class="keyword">moveRowAtIndexPath:(NSIndexPath </span>*)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
-{
-    NSString *<span class="keyword">stringTemp </span>= [[<span class="keyword">self.dataArray </span>objectAtIndex:sourceIndexPath<span class="preprocessor">.section</span>] objectAtIndex:sourceIndexPath.row]<span class="comment">;</span>
-
-    [[<span class="keyword">self.dataArray </span>objectAtIndex:sourceIndexPath<span class="preprocessor">.section</span>] removeObjectAtIndex:sourceIndexPath.row]<span class="comment">;</span>
-    [[<span class="keyword">self.dataArray </span>objectAtIndex:destinationIndexPath<span class="preprocessor">.section</span>] insertObject:<span class="keyword">stringTemp </span>atIndex:destinationIndexPath.row]<span class="comment">;</span>
-
-    <span class="preprocessor">if</span> ([[<span class="keyword">self.dataArray </span>objectAtIndex:sourceIndexPath<span class="preprocessor">.section</span>] count] == <span class="number">0</span>) {
-        [<span class="keyword">self.dataArray </span>removeObjectAtIndex:sourceIndexPath<span class="preprocessor">.section</span>]<span class="comment">;</span>
-        [<span class="keyword">self.tableView </span>reloadData]<span class="comment">;</span>
-    }
-}
-</code></pre><h1 id="总结">总结</h1><p>在UITableView的操作中，唯一需要着重注意的就是数据要和视图一一对应，否则会造成UITableView的崩溃。</p>
+        <span itemprop="articleBody"><h3 id="vm(vim)简介">vm(vim)简介</h3><hr>
+<p>vi(vim)是上Linux非常常用的编辑器，很多Linux发行版都默认安装了vi(vim)。vi(vim)命令繁多但是如果使用灵活之后将会大大提高效率。vi是“visual interface”的缩写，vim是vi IMproved(增强版的vi)。在一般的系统管理维护中vi就够用，如果想使用代码加亮的话可以使用vim。下面是vi的使用教程：包含vi的基本介绍、使用模式、文件的打开关闭保存、插入文本或新建行、移动光标、删除、恢复字符或行、搜索等等，算是一篇比较适合新手学习vi的教程。</p>
+<a id="more"></a>
+<h3 id="vim编辑器的三种样式">vim编辑器的三种样式</h3><hr>
+<blockquote>
+<p>1.命令模式</p>
+</blockquote>
+<p>在该模式中，可以输入命令来执行许多种功能。控制屏幕光标的移动，字符、字或行的删除，移动复制某区段及进入Insert mode下，或者到 last line mode。</p>
+<blockquote>
+<p>2.输入模式</p>
+</blockquote>
+<p>vim被运行时，通常处在命令模式下，键入以下命令 可以使vim退出命令模式，进入输入模式：I（i）、A（a）、O（o）。</p>
+<blockquote>
+<p>3.末行模式</p>
+</blockquote>
+<p>将文件保存或退出vim，也可以设置编辑环境，如寻找字符串、列出行号……等。不过一般我们在使用时把vim简化成两个模式，就是将末行模式（last line mode）也算入命令行模式command mode）。</p>
+<p><img src="http://www.dzsc.com/news/uploadfile/2011525141834429.jpg" alt=""></p>
+<h3 id="vim编辑器的启动与退出">vim编辑器的启动与退出</h3><hr>
+<blockquote>
+<h3 id="1-vim的启动">1.vim的启动</h3></blockquote>
+<p>输入vim命令后，便进入全屏幕编辑环境，此时的状态为命令模式。</p>
+<p>　　(1) vim</p>
+<p>　　进入vi的一个临时缓冲区，光标定位在该缓冲区第1行第1列的位置上。</p>
+<p>　　(2) vim file1</p>
+<p>　　如果file1文件不存在，将建立此文件；如该文件存在，则将其拷贝到一个临时缓冲区。光标定位在该缓冲区第1行第1列的位置上。</p>
+<p>　　(3) vim + file1</p>
+<p>　　如果file1文件不存在，将建立此文件；如该文件存在，则将其拷贝到一个临时缓冲区。光标定位在文件最后1行第1列的位置上。</p>
+<p>　　(4) vim +N file1(N：为数字)</p>
+<p>　　如果file1文件不存在，将建立此文件；如该文件存在，则将其拷贝到一个临时缓冲区。光标定位在文件第N行第1列的位置上。</p>
+<p>　　(5) vim +/string file1</p>
+<p>　　如果file1文件不存在将建立此文件；如该文件存在则将其拷贝到一个临时缓冲区。光标定位在文件中第一次出现字符串string的行首位置。</p>
+<blockquote>
+<h3 id="2-退出vim(末行模式（last_line_mode）)">2.退出vim(末行模式（last line mode）)</h3></blockquote>
+<p> 建议在退出vim前，先按ESC键，以确保当前vim的状态为命令方式，然后再键入“：”(冒号)，输入下列命令，退出vi。</p>
+<p>　　(1) :w</p>
+<p>　　将编辑缓冲区的内容写入文件，则新的内容就替代了原始文件。这时并没有退出vim，必须进一步输入下述命令才能退出vi：</p>
+<p>　　:w filename(存入指定文件)</p>
+<p>　　:q</p>
+<p>　　(2) :wq</p>
+<p>　　即将上面的两步操作可以合成一步来完成，先执行w，后执行q。</p>
+<p>　　(3) :x和ZZ(注意： ZZ前面没有“:”)</p>
+<p>　　功能与(2)等价。</p>
+<p>　　(4) :q!(或:quit)</p>
+<p>　　强行退出vim，使被更新的内容不写回文件中。仅键入命令:q时，如vim发现文本内容已被更改，将提示用户使用“:quit”命令退出。
+　　</p>
+<h3 id="vim编辑器常用命令">vim编辑器常用命令</h3><hr>
+<blockquote>
+<h3 id="1-在文件中移动光标">1.在文件中移动光标</h3></blockquote>
+<p>　　l：向右移动一个字符<br>　　h：向左移动一个字符</p>
+<p>　　j：向下移动一行</p>
+<p>　　k：向上移动一行</p>
+<p>　　^（即Shift+6）：移动到当前行的开头处</p>
+<p>　　$（即Shift+4）：移动到当前行的结尾处</p>
+<p>　　H（大写）:使光标移动到屏幕的顶部</p>
+<p>　　M（大写）:使光标移动到屏幕的中间</p>
+<p>　　L（大写）:使光标移动到屏幕的底部</p>
+<p>　　Ctrl+b：上滚一屏。</p>
+<p>　　Ctrl+f：下滚一屏。</p>
+<p>　　Ctrl+d：下滚半屏。</p>
+<p>　　Ctrl+u: 上滚半屏。</p>
+<blockquote>
+<h3 id="2-插入文本">2.插入文本</h3></blockquote>
+<ul>
+<li><p>（1）添加：</p>
+<p>1&gt; 输入a后，再逛标的右边插入文本<br>2&gt; 输入A，在一行的结尾处添加文本</p>
+</li>
+<li><p>（2）插入：</p>
+<p>1&gt; 通过在命令模式下输入i，在光标的左边插入文本<br>2&gt; 通过在命令模式下输入I，在行首插入文本</p>
+</li>
+<li>（3）插入新行：<br>1&gt; 输入o，在当前光标位置下面打开一行<br>2&gt; 输入O，在当前光标位置上面打开一行</li>
+</ul>
+<blockquote>
+<h3 id="3-撤销更改">3.撤销更改</h3></blockquote>
+<p> (1) 撤消前一个命令：在最后一个命令之后立即输入u来撤消该命令<br>（2）重复某个命令：<code>.</code></p>
+<p>（3）撤消对一行的更改：输入U来撤消你对一行所做的所有更改，这个命令只有在你没将光标移动到该行以外时才生效。                </p>
+<p>　　</p>
+<blockquote>
+<h3 id="4-删除文本">4.删除文本</h3></blockquote>
+<p>   （1）删除一个字符：</p>
+<p>　　●为删除一个字符，需将光标放置在要删除的字符上并输入x</p>
+<p>　　●为删除光标之前（其左边）的一个字符，需输入X</p>
+<p>　　（2）删除一个词或词的部分内容：</p>
+<p>　　●为删除一个词，需将光标放置到该词的开头并输入dw</p>
+<p>　　●为删除词的部分内容，需将光标放置到该词要保存部分的右边。输入dw来删除该词余下的部分</p>
+<p>　　（3）删除一行：将光标放置到该行的任意处并输入dd</p>
+<p>　　（4）删除多行：ndd</p>
+<p>　　（5）删除行的部分内容：将光标放置到该行要保存部分的右边，并输入D。为删除光标左边的所有内容，须将光标放置到该行要删除部分的右边，并输入d0（d-零）。</p>
+<p>　　（6）删除到文件的结尾：为删除从当前行到文件结尾的所有内容，需输入dG
+　　</p>
+<blockquote>
+<h3 id="5、复制和移动文本">5、复制和移动文本</h3></blockquote>
+<p>　　●复制一行命令：yy</p>
+<p>　　●粘贴命令：p</p>
+<p>　　●移动文本：先将要移动的部分用删除命令删除，然后再粘贴就可以了</p>
+<p>　　●复制指定文件的内容</p>
+<p>　　: r filename</p>
+<blockquote>
+<h3 id="6、查找一个字符串">6、查找一个字符串</h3></blockquote>
+<p>　　●输入/，并在/后面输入要查找的串，然后按下回车</p>
+<p>　　●输入“n”跳转到该串的下一个出现处</p>
+<p>　　●输入“N”跳转到该串的上一个出现处</p>
+<blockquote>
+<h3 id="7、替换一个字符串">7、替换一个字符串</h3></blockquote>
+<p>　　●在一行内替换头一个字符串old为新的字符串new</p>
+<p>　　:s/old/new</p>
+<p>　　●在一行内替换所有的字符串old为新的字符串new</p>
+<p>　　:s/old/new/g</p>
+<p>　　●在两行内替换所有的字符串old为新的字符串new</p>
+<p>　　:#,#s/old/new/g</p>
+<p>　　●在文件内替换所有的字符串old为新的字符串new</p>
+<p>　　:%s/old/new/g</p>
+<p>　　●进行全文替换时询问用户确认每个替换需添加c选项</p>
+<p>　　:%s/old/new/gc</p>
+<blockquote>
+<h3 id="8、设置vim">8、设置vim</h3></blockquote>
+<p>　　●显示行号</p>
+<p>　　:set number</p>
+<p>　　●取消行号显示</p>
+<p>　　:set nonumber</p>
+<p>　　●设置显示用户模式</p>
+<p>　　:set showmode</p>
+<p>　　●设置文件只读</p>
+<p>　　:set readonly</p>
 </span>
       
     </div>
@@ -320,11 +374,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/UI/" rel="tag">#UI</a>
-          
-            <a href="/tags/iOS/" rel="tag">#iOS</a>
-          
-            <a href="/tags/控件/" rel="tag">#控件</a>
+            <a href="/tags/Vim-编辑器/" rel="tag">#Vim 编辑器</a>
           
         </div>
       
@@ -333,16 +383,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2014/10/22/tableview/" rel="next" title="UITableView">
-                <i class="fa fa-chevron-left"></i> UITableView
+              <a href="/2014/12/11/如何上传本地文件到github/" rel="next" title="如何上传本地文件到github">
+                <i class="fa fa-chevron-left"></i> 如何上传本地文件到github
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2014/10/24/CellReUse/" rel="prev" title="UITableView 中 cell 的自定义以及重用">
-                UITableView 中 cell 的自定义以及重用 <i class="fa fa-chevron-right"></i>
+              <a href="/2014/12/27/可视化编程之-Xib/" rel="prev" title="可视化编程之-Xib">
+                可视化编程之-Xib <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -450,7 +500,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#编辑"><span class="nav-number">1.</span> <span class="nav-text">编辑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#*_编辑当前页面为可编辑状态"><span class="nav-number">1.1.</span> <span class="nav-text">* 编辑当前页面为可编辑状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#*_确定可以编辑的行数"><span class="nav-number">1.2.</span> <span class="nav-text">* 确定可以编辑的行数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#*_确定编辑类型"><span class="nav-number">1.3.</span> <span class="nav-text">* 确定编辑类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#*_处理编辑事件"><span class="nav-number">1.4.</span> <span class="nav-text">* 处理编辑事件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#移动"><span class="nav-number">2.</span> <span class="nav-text">移动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#*_设置页面为编辑状态"><span class="nav-number">2.1.</span> <span class="nav-text">* 设置页面为编辑状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#*_确定每行是否可以移动"><span class="nav-number">2.2.</span> <span class="nav-text">* 确定每行是否可以移动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#*_处理移动事件"><span class="nav-number">2.3.</span> <span class="nav-text">* 处理移动事件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#vm(vim)简介"><span class="nav-number">1.</span> <span class="nav-text">vm(vim)简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vim编辑器的三种样式"><span class="nav-number">2.</span> <span class="nav-text">vim编辑器的三种样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vim编辑器的启动与退出"><span class="nav-number">3.</span> <span class="nav-text">vim编辑器的启动与退出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-vim的启动"><span class="nav-number">4.</span> <span class="nav-text">1.vim的启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-退出vim(末行模式（last_line_mode）)"><span class="nav-number">5.</span> <span class="nav-text">2.退出vim(末行模式（last line mode）)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vim编辑器常用命令"><span class="nav-number">6.</span> <span class="nav-text">vim编辑器常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-在文件中移动光标"><span class="nav-number">7.</span> <span class="nav-text">1.在文件中移动光标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-插入文本"><span class="nav-number">8.</span> <span class="nav-text">2.插入文本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-撤销更改"><span class="nav-number">9.</span> <span class="nav-text">3.撤销更改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-删除文本"><span class="nav-number">10.</span> <span class="nav-text">4.删除文本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、复制和移动文本"><span class="nav-number">11.</span> <span class="nav-text">5、复制和移动文本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、查找一个字符串"><span class="nav-number">12.</span> <span class="nav-text">6、查找一个字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、替换一个字符串"><span class="nav-number">13.</span> <span class="nav-text">7、替换一个字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8、设置vim"><span class="nav-number">14.</span> <span class="nav-text">8、设置vim</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

@@ -36,7 +36,7 @@
 
 
 
-  <meta name="keywords" content="UI,iOS,控件," />
+  <meta name="keywords" content="iOS,可视化编程," />
 
 
 
@@ -45,16 +45,29 @@
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
 
 
-<meta name="description" content="上一篇记录了UITableView基本的用法，包括创建、设置代理以及代理方法的实现。这一篇来记录一下UITableView的编辑和移动。">
+<meta name="description" content="1 StoryBoard到底是什么？">
 <meta property="og:type" content="article">
-<meta property="og:title" content="UITableView的编辑和移动">
-<meta property="og:url" content="http://yoursite.com/2014/10/23/tableViewEditAndMove/index.html">
+<meta property="og:title" content="可视化编程之Storyboard">
+<meta property="og:url" content="http://yoursite.com/2015/01/03/可视化编程之Storyboard/index.html">
 <meta property="og:site_name" content="马德茂">
-<meta property="og:description" content="上一篇记录了UITableView基本的用法，包括创建、设置代理以及代理方法的实现。这一篇来记录一下UITableView的编辑和移动。">
-<meta property="og:updated_time" content="2015-10-31T01:52:10.000Z">
+<meta property="og:description" content="1 StoryBoard到底是什么？">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/9c2363adgw1eoklt43hgsj21kw0yc787.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/9c2363adgw1eoklv7a2k2j2074074q32.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/9c2363adgw1eokmms816uj214k0nwq60.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/9c2363adgw1eokmpo6gnuj21kw0sp79g.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/9c2363adgw1eokmuvh1hmj21jc13yqa1.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/9c2363adgw1eokn27zja3j21ji14qah2.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/9c2363adgw1eokn2rih0hj21j80ekdj5.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/9c2363adgw1eokncuk5guj20x20o0dgy.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/9c2363adgw1eokneagdmwj20dm0b8q3p.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/9c2363adgw1eoknlkmurfj209405ijre.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/9c2363adgw1eoknrqpirdj215y0fwq50.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/9c2363adgw1eoknt7l4ouj20gu05it9f.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/9c2363adgw1eoknwpsqq7j20y20sqaem.jpg">
+<meta property="og:updated_time" content="2015-11-29T11:49:16.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="UITableView的编辑和移动">
-<meta name="twitter:description" content="上一篇记录了UITableView基本的用法，包括创建、设置代理以及代理方法的实现。这一篇来记录一下UITableView的编辑和移动。">
+<meta name="twitter:title" content="可视化编程之Storyboard">
+<meta name="twitter:description" content="1 StoryBoard到底是什么？">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -66,7 +79,7 @@
 
 
 
-  <title> UITableView的编辑和移动 | 马德茂 </title>
+  <title> 可视化编程之Storyboard | 马德茂 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -191,7 +204,7 @@
             
             
               
-                UITableView的编辑和移动
+                可视化编程之Storyboard
               
             
           </h1>
@@ -200,8 +213,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2014-10-23T17:15:08+08:00" content="2014-10-23">
-              2014-10-23
+            <time itemprop="dateCreated" datetime="2015-01-03T20:38:09+08:00" content="2015-01-03">
+              2015-01-03
             </time>
           </span>
 
@@ -210,8 +223,8 @@
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS</span>
+                  <a href="/categories/技术篇/" itemprop="url" rel="index">
+                    <span itemprop="name">技术篇</span>
                   </a>
                 </span>
 
@@ -239,79 +252,46 @@
       
 
       
-        <span itemprop="articleBody"><p>上一篇记录了UITableView基本的用法，包括创建、设置代理以及代理方法的实现。这一篇来记录一下UITableView的编辑和移动。<br><a id="more"></a></p>
-<h1 id="编辑">编辑</h1><p>因为数据的操作一般指的是增删改查，所以编辑操作一般值得是对数据的删除。</p>
-<p>删除一般分为以下几步：</p>
-<ol>
-<li>编辑当前页面为可编辑状态。注：即使当前页面为不可编辑状态，也可左滑拉出删除按钮。</li>
-<li>确定可以编辑的行数。</li>
-<li>确定编辑类型。</li>
-<li>处理编辑事件。</li>
-</ol>
-<h2 id="*_编辑当前页面为可编辑状态">* 编辑当前页面为可编辑状态</h2><p>为了能够改变页面的编辑状态，我们在页面右上角加上一个按钮，用来改变页面的编辑状态。在此之前，我们要在storyboard中Controller对应的页面上包上一层Navigation。</p>
-<pre><code>self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] <span class="string">initWithTitle:</span>@<span class="string">"编辑"</span> <span class="string">style:</span>UIBarButtonItemStylePlain <span class="string">target:</span>self <span class="string">action:</span><span class="annotation">@selector</span>(<span class="string">rightBtnAction:</span>)];
-</code></pre><p>按钮事件为：</p>
-<pre><code>- (<span class="keyword">void</span>)rightBtnAction:(<span class="built_in">UIBarButtonItem</span> *)sender
-{
-    <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.tableView</span><span class="variable">.editing</span> == <span class="literal">YES</span>) {
-        <span class="keyword">self</span><span class="variable">.navigationItem</span><span class="variable">.rightBarButtonItem</span><span class="variable">.title</span> = <span class="string">@"编辑"</span>;
-    }<span class="keyword">else</span>{
-        <span class="keyword">self</span><span class="variable">.navigationItem</span><span class="variable">.rightBarButtonItem</span><span class="variable">.title</span> = <span class="string">@"完成"</span>;
-    }
-    <span class="keyword">self</span><span class="variable">.tableView</span><span class="variable">.editing</span> = !<span class="keyword">self</span><span class="variable">.tableView</span><span class="variable">.editing</span>;
-}
-</code></pre><h2 id="*_确定可以编辑的行数">* 确定可以编辑的行数</h2><p>可以根据条件返回YES/NO。我们这里设置为全部可以编辑。</p>
-<pre><code>- (<span class="built_in">BOOL</span>)tableView:(<span class="built_in">UITableView</span> *)tableView canEditRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath
-{
-    <span class="keyword">return</span> <span class="literal">YES</span>;
-}
-</code></pre><h2 id="*_确定编辑类型">* 确定编辑类型</h2><p>我们一般设置为删除。</p>
-<pre><code>- (<span class="built_in">UITableViewCellEditingStyle</span>)tableView:(<span class="built_in">UITableView</span> *)tableView editingStyleForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath
-{
-    <span class="keyword">return</span> <span class="built_in">UITableViewCellEditingStyleDelete</span>;
-}
-</code></pre><h2 id="*_处理编辑事件">* 处理编辑事件</h2><p><code>在处理事件时，一定要注意数据和界面保持一致，否则会崩溃</code></p>
-<pre><code>- (<span class="typename">void</span>)<span class="string">tableView:</span>(UITableView *)tableView <span class="string">commitEditingStyle:</span>(UITableViewCellEditingStyle)editingStyle <span class="string">forRowAtIndexPath:</span>(NSIndexPath *)indexPath
-{
-    <span class="comment">//该条数据是这个块中最后一条数据</span>
-    <span class="keyword">if</span> ([[self.dataArray <span class="string">objectAtIndex:</span>indexPath.section] count] == <span class="number">1</span>) {
-        <span class="comment">//删除数据</span>
-        [self.dataArray <span class="string">removeObjectAtIndex:</span>indexPath.section];
-        <span class="comment">//更新页面</span>
-        NSIndexSet *set = [NSIndexSet <span class="string">indexSetWithIndex:</span>indexPath.section];
-        [self.tableView <span class="string">deleteSections:</span>set <span class="string">withRowAnimation:</span>UITableViewRowAnimationRight];
-    }<span class="keyword">else</span>{
-        <span class="comment">//删除数据</span>
-        [[self.dataArray <span class="string">objectAtIndex:</span>indexPath.section] <span class="string">removeObjectAtIndex:</span>indexPath.row];
-        <span class="comment">//更新页面</span>
-        [self.tableView <span class="string">deleteRowsAtIndexPaths:</span>@[indexPath] <span class="string">withRowAnimation:</span>UITableViewRowAnimationRight];
-    }
-}
-</code></pre><h1 id="移动">移动</h1><p>移动有跨块移动和不跨块移动，我这里把两种情况写在了一起。</p>
-<p>同样的，移动也是分步骤的，步骤如下：</p>
-<ol>
-<li>设置页面为编辑状态。</li>
-<li>确定每行是否可以移动。</li>
-<li>处理移动事件</li>
-</ol>
-<h2 id="*_设置页面为编辑状态">* 设置页面为编辑状态</h2><p>同编辑过程中的第一步</p>
-<h2 id="*_确定每行是否可以移动">* 确定每行是否可以移动</h2><pre><code>- (<span class="built_in">BOOL</span>)tableView:(<span class="built_in">UITableView</span> *)tableView canMoveRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath
-{
-    <span class="keyword">return</span> <span class="literal">YES</span>;
-}
-</code></pre><h2 id="*_处理移动事件">* 处理移动事件</h2><pre><code>- (void)tableView:(UITableView *)tableView <span class="keyword">moveRowAtIndexPath:(NSIndexPath </span>*)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
-{
-    NSString *<span class="keyword">stringTemp </span>= [[<span class="keyword">self.dataArray </span>objectAtIndex:sourceIndexPath<span class="preprocessor">.section</span>] objectAtIndex:sourceIndexPath.row]<span class="comment">;</span>
-
-    [[<span class="keyword">self.dataArray </span>objectAtIndex:sourceIndexPath<span class="preprocessor">.section</span>] removeObjectAtIndex:sourceIndexPath.row]<span class="comment">;</span>
-    [[<span class="keyword">self.dataArray </span>objectAtIndex:destinationIndexPath<span class="preprocessor">.section</span>] insertObject:<span class="keyword">stringTemp </span>atIndex:destinationIndexPath.row]<span class="comment">;</span>
-
-    <span class="preprocessor">if</span> ([[<span class="keyword">self.dataArray </span>objectAtIndex:sourceIndexPath<span class="preprocessor">.section</span>] count] == <span class="number">0</span>) {
-        [<span class="keyword">self.dataArray </span>removeObjectAtIndex:sourceIndexPath<span class="preprocessor">.section</span>]<span class="comment">;</span>
-        [<span class="keyword">self.tableView </span>reloadData]<span class="comment">;</span>
-    }
-}
-</code></pre><h1 id="总结">总结</h1><p>在UITableView的操作中，唯一需要着重注意的就是数据要和视图一一对应，否则会造成UITableView的崩溃。</p>
+        <span itemprop="articleBody"><h2 id="1_StoryBoard到底是什么？">1 StoryBoard到底是什么？</h2><p><img src="http://ww2.sinaimg.cn/large/9c2363adgw1eoklt43hgsj21kw0yc787.jpg" alt=""></p>
+<a id="more"></a>
+<p>如上图所示，就是我们一直在说的<code>Storyboard</code>，创建项目的时候选择<code>Single View Application</code></p>
+<p><img src="http://ww3.sinaimg.cn/large/9c2363adgw1eoklv7a2k2j2074074q32.jpg" alt=""></p>
+<p>模板，我们就可以默认得到一个控制器类<code>ViewController.h/.m</code>和一个<code>Main.storyboard</code>文件，<code>Main.storyboard</code>文件就是的故事板（Storyboard），在这里可以操作我们的几乎所有的控制器。</p>
+<p><code>Storyboard</code>中存在的不仅仅是<code>View</code>那么简单的概念，而是放置了一个<code>ViewController</code>的概念。也就是说，我们在可视化页面中，除了可以在页面中操作视图之外，我们还可以在页面中操作控制器的一些设置等等。</p>
+<blockquote>
+<p><code>Storyboard</code>就是把很多的<code>Xib</code>文件添加到了一个文件中，让我们可以在一个文件中操作所有视图，更加的方便和快捷。同时，我们还可以设置页面之间的联系。展示程序页面之间的逻辑关系</p>
+<p>不同的是，Xib中代表的仅仅是View，Storyboard中代表的是控制器</p>
+</blockquote>
+<h2 id="2_StoryBoard与xib相比较的优势与劣势？">2  StoryBoard与xib相比较的优势与劣势？</h2><p>Xib的和纯代码开发相比起来优势已经很明显了：方便、快速、直观。。。可以帮我们提高工作效率，节省开发时间。</p>
+<p>Storyboard和xib比起来，除了拥有Xib拥有的优势外，它还有自己的优势。</p>
+<blockquote>
+<p>方便、快速、直观<br>显示各个控制器之间的顺序关系<br>快速设置控制器的一些属性</p>
+</blockquote>
+<h2 id="3_如何使用">3 如何使用</h2><h3 id="3-1_单独创建Stioryboard文件">3.1 单独创建Stioryboard文件</h3><p><code>cmd + N</code>，选择User Interface-&gt;StoryBoard<br><img src="http://ww1.sinaimg.cn/large/9c2363adgw1eokmms816uj214k0nwq60.jpg" alt=""><br>创建之后如何让程序去加载呢，在这里设置下：选中项目-&gt;General-&gt;Main Interface，在Main Interface输入storyboard文件名<br><img src="http://ww2.sinaimg.cn/large/9c2363adgw1eokmpo6gnuj21kw0sp79g.jpg" alt=""></p>
+<p>设置好了之后，程序启动后就会自动加载我们的Stroyboard文件了</p>
+<h3 id="3-2_Storyboard中那么多控制器，哪个是根视图控制器?">3.2 Storyboard中那么多控制器，哪个是根视图控制器?</h3><p>Storyboard中可以包含很多的视图控制器，那到底哪个是根视图控制器呢？注意，这里不需要我们去写代码声明。只需要勾选就OK了。<br><img src="http://ww4.sinaimg.cn/large/9c2363adgw1eokmuvh1hmj21jc13yqa1.jpg" alt=""></p>
+<p>视图控制器左侧的小箭头就表示当前的为根视图控制器，设置的位置就是右侧<code>Is Initial View Controller</code>的复选框。</p>
+<p>小箭头也可以直接拖动，可以从一个控制器拖到另一个控制器上，这样就更改了根视图控制器。</p>
+<h3 id="3-3_添加新的视图控制器和关联">3.3 添加新的视图控制器和关联</h3><p><img src="http://ww2.sinaimg.cn/large/9c2363adgw1eokn27zja3j21ji14qah2.jpg" alt=""><br>从右下角直接找到<code>View Controller</code>拖到Stroyboard，这样就创建了一个视图控制器，但是需要和<code>ViewController.h/.m</code>进行关联，<br><img src="http://ww3.sinaimg.cn/large/9c2363adgw1eokn2rih0hj21j80ekdj5.jpg" alt=""><br>在<code>Class</code>中输入对应的控制器的名称，这样就进行了关联，怎么样，比Xib简单吧。</p>
+<h3 id="3-4_使用Segue">3.4 使用Segue</h3><p><code>Segue</code>，就是我们在storyboard中看到的那些线，相对应的类是<code>UIStoryboardSegue</code>，segue的作用就是可以表示出控制器之间的跳转关系，并且，是可以直接实现跳转的。<br>在一个控制器中拖入一个UIButton，然后按住<code>Control</code>按钮，从button上拖到另外一个控制器中，<br><img src="http://ww2.sinaimg.cn/large/9c2363adgw1eokncuk5guj20x20o0dgy.jpg" alt=""><br>松手后可以看到弹出这样一个HUD：<br><img src="http://ww2.sinaimg.cn/large/9c2363adgw1eokneagdmwj20dm0b8q3p.jpg" alt=""></p>
+<p>最下面的两个，push和modal大家都认识，一个是导航控制器的跳转页面，另一个是模态的效果。</p>
+<p>大家也可以发现，已经被deprecated掉了，所以我们不应该再去使用。</p>
+<p><strong>解释下最新的:</strong> </p>
+<p><strong>show:</strong>相当于push，但是有一个好处：如果没有导航控制器，跳转的方式就是模态，如果存在导航控制器，就是push的效果。</p>
+<p><strong>show detail:</strong>相当于modal。</p>
+<p>我们选择<strong>show</strong>，这样可以看到一条线：<br><img src="http://ww2.sinaimg.cn/large/9c2363adgw1eoknlkmurfj209405ijre.jpg" alt=""></p>
+<p>这条线就是segue，代表了转场。（segue的使用后期再做详细介绍）</p>
+<p>这样搞定之后，我们就实现了页面之间的跳转，都不需要写代码。</p>
+<h3 id="3-5_设置代理">3.5 设置代理</h3><p>如果我们添加了tableView到视图中，我们不需要写代码，可以直接设置代理：<br><img src="http://ww4.sinaimg.cn/large/9c2363adgw1eoknrqpirdj215y0fwq50.jpg" alt=""></p>
+<p>按住<code>Control</code>，从tableView拖到对应的控制器上，松手后会看到：<br><img src="http://ww3.sinaimg.cn/large/9c2363adgw1eoknt7l4ouj20gu05it9f.jpg" alt=""></p>
+<p>可以看到dataSource和delegate，把两个都选中就代表我们设置了tableView的代理为当前的视图控制器。选中的代理项会在前面出现小点点，就比如dataSource。</p>
+<h3 id="3-6_给控制器添加导航控制器或者标签控制器">3.6  给控制器添加导航控制器或者标签控制器</h3><p>选中一个控制器，然后去菜单栏：Editor-&gt;Embed In-&gt;Navigation Controller<br><img src="http://ww4.sinaimg.cn/large/9c2363adgw1eoknwpsqq7j20y20sqaem.jpg" alt=""></p>
+<p>我们选中控制器可以将当前控制器装载到控制器中，当我们选中几个View的时候，我们也可以装载到View或者ScrollView中，非常的方便。</p>
+<blockquote>
+<p>建议大家在个人项目中使用Storyboard，</p>
+<p>团队项目的时候使用Xib，</p>
+<p>总之就是尽量使用可视化编程，提高我们的工作效率。</p>
+</blockquote>
 </span>
       
     </div>
@@ -320,11 +300,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/UI/" rel="tag">#UI</a>
-          
             <a href="/tags/iOS/" rel="tag">#iOS</a>
           
-            <a href="/tags/控件/" rel="tag">#控件</a>
+            <a href="/tags/可视化编程/" rel="tag">#可视化编程</a>
           
         </div>
       
@@ -333,16 +311,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2014/10/22/tableview/" rel="next" title="UITableView">
-                <i class="fa fa-chevron-left"></i> UITableView
+              <a href="/2014/12/27/可视化编程之-Xib/" rel="next" title="可视化编程之-Xib">
+                <i class="fa fa-chevron-left"></i> 可视化编程之-Xib
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2014/10/24/CellReUse/" rel="prev" title="UITableView 中 cell 的自定义以及重用">
-                UITableView 中 cell 的自定义以及重用 <i class="fa fa-chevron-right"></i>
+              <a href="/2015/01/18/iOS添加测试设备与调试/" rel="prev" title="iOS添加测试设备与调试">
+                iOS添加测试设备与调试 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -450,7 +428,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#编辑"><span class="nav-number">1.</span> <span class="nav-text">编辑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#*_编辑当前页面为可编辑状态"><span class="nav-number">1.1.</span> <span class="nav-text">* 编辑当前页面为可编辑状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#*_确定可以编辑的行数"><span class="nav-number">1.2.</span> <span class="nav-text">* 确定可以编辑的行数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#*_确定编辑类型"><span class="nav-number">1.3.</span> <span class="nav-text">* 确定编辑类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#*_处理编辑事件"><span class="nav-number">1.4.</span> <span class="nav-text">* 处理编辑事件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#移动"><span class="nav-number">2.</span> <span class="nav-text">移动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#*_设置页面为编辑状态"><span class="nav-number">2.1.</span> <span class="nav-text">* 设置页面为编辑状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#*_确定每行是否可以移动"><span class="nav-number">2.2.</span> <span class="nav-text">* 确定每行是否可以移动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#*_处理移动事件"><span class="nav-number">2.3.</span> <span class="nav-text">* 处理移动事件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1_StoryBoard到底是什么？"><span class="nav-number">1.</span> <span class="nav-text">1 StoryBoard到底是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2_StoryBoard与xib相比较的优势与劣势？"><span class="nav-number">2.</span> <span class="nav-text">2  StoryBoard与xib相比较的优势与劣势？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3_如何使用"><span class="nav-number">3.</span> <span class="nav-text">3 如何使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1_单独创建Stioryboard文件"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 单独创建Stioryboard文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2_Storyboard中那么多控制器，哪个是根视图控制器?"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 Storyboard中那么多控制器，哪个是根视图控制器?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3_添加新的视图控制器和关联"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 添加新的视图控制器和关联</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4_使用Segue"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 使用Segue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5_设置代理"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 设置代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6_给控制器添加导航控制器或者标签控制器"><span class="nav-number">3.6.</span> <span class="nav-text">3.6  给控制器添加导航控制器或者标签控制器</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

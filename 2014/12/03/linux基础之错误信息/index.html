@@ -36,7 +36,7 @@
 
 
 
-  <meta name="keywords" content="UI,iOS,控件," />
+  <meta name="keywords" content="linux基础," />
 
 
 
@@ -45,16 +45,19 @@
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
 
 
-<meta name="description" content="上一篇记录了UITableView基本的用法，包括创建、设置代理以及代理方法的实现。这一篇来记录一下UITableView的编辑和移动。">
+<meta name="description" content="简介
+在处理Linux系统出现的各种故障时，故障的症状是最先发现的，而导致这以故障的原因才是最终排除故障的关键。熟悉Linux系统的日志管理，了解常见故障的分析与解决办法，将有助于管理员快速定位故障点。“对症下药”及时解决各种系统问题。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="UITableView的编辑和移动">
-<meta property="og:url" content="http://yoursite.com/2014/10/23/tableViewEditAndMove/index.html">
+<meta property="og:title" content="linux基础之错误信息">
+<meta property="og:url" content="http://yoursite.com/2014/12/03/linux基础之错误信息/index.html">
 <meta property="og:site_name" content="马德茂">
-<meta property="og:description" content="上一篇记录了UITableView基本的用法，包括创建、设置代理以及代理方法的实现。这一篇来记录一下UITableView的编辑和移动。">
-<meta property="og:updated_time" content="2015-10-31T01:52:10.000Z">
+<meta property="og:description" content="简介
+在处理Linux系统出现的各种故障时，故障的症状是最先发现的，而导致这以故障的原因才是最终排除故障的关键。熟悉Linux系统的日志管理，了解常见故障的分析与解决办法，将有助于管理员快速定位故障点。“对症下药”及时解决各种系统问题。">
+<meta property="og:updated_time" content="2015-11-29T11:49:13.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="UITableView的编辑和移动">
-<meta name="twitter:description" content="上一篇记录了UITableView基本的用法，包括创建、设置代理以及代理方法的实现。这一篇来记录一下UITableView的编辑和移动。">
+<meta name="twitter:title" content="linux基础之错误信息">
+<meta name="twitter:description" content="简介
+在处理Linux系统出现的各种故障时，故障的症状是最先发现的，而导致这以故障的原因才是最终排除故障的关键。熟悉Linux系统的日志管理，了解常见故障的分析与解决办法，将有助于管理员快速定位故障点。“对症下药”及时解决各种系统问题。">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -66,7 +69,7 @@
 
 
 
-  <title> UITableView的编辑和移动 | 马德茂 </title>
+  <title> linux基础之错误信息 | 马德茂 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -191,7 +194,7 @@
             
             
               
-                UITableView的编辑和移动
+                linux基础之错误信息
               
             
           </h1>
@@ -200,8 +203,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2014-10-23T17:15:08+08:00" content="2014-10-23">
-              2014-10-23
+            <time itemprop="dateCreated" datetime="2014-12-03T18:57:30+08:00" content="2014-12-03">
+              2014-12-03
             </time>
           </span>
 
@@ -210,8 +213,8 @@
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS</span>
+                  <a href="/categories/兴趣篇/" itemprop="url" rel="index">
+                    <span itemprop="name">兴趣篇</span>
                   </a>
                 </span>
 
@@ -239,80 +242,34 @@
       
 
       
-        <span itemprop="articleBody"><p>上一篇记录了UITableView基本的用法，包括创建、设置代理以及代理方法的实现。这一篇来记录一下UITableView的编辑和移动。<br><a id="more"></a></p>
-<h1 id="编辑">编辑</h1><p>因为数据的操作一般指的是增删改查，所以编辑操作一般值得是对数据的删除。</p>
-<p>删除一般分为以下几步：</p>
-<ol>
-<li>编辑当前页面为可编辑状态。注：即使当前页面为不可编辑状态，也可左滑拉出删除按钮。</li>
-<li>确定可以编辑的行数。</li>
-<li>确定编辑类型。</li>
-<li>处理编辑事件。</li>
-</ol>
-<h2 id="*_编辑当前页面为可编辑状态">* 编辑当前页面为可编辑状态</h2><p>为了能够改变页面的编辑状态，我们在页面右上角加上一个按钮，用来改变页面的编辑状态。在此之前，我们要在storyboard中Controller对应的页面上包上一层Navigation。</p>
-<pre><code>self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] <span class="string">initWithTitle:</span>@<span class="string">"编辑"</span> <span class="string">style:</span>UIBarButtonItemStylePlain <span class="string">target:</span>self <span class="string">action:</span><span class="annotation">@selector</span>(<span class="string">rightBtnAction:</span>)];
-</code></pre><p>按钮事件为：</p>
-<pre><code>- (<span class="keyword">void</span>)rightBtnAction:(<span class="built_in">UIBarButtonItem</span> *)sender
-{
-    <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.tableView</span><span class="variable">.editing</span> == <span class="literal">YES</span>) {
-        <span class="keyword">self</span><span class="variable">.navigationItem</span><span class="variable">.rightBarButtonItem</span><span class="variable">.title</span> = <span class="string">@"编辑"</span>;
-    }<span class="keyword">else</span>{
-        <span class="keyword">self</span><span class="variable">.navigationItem</span><span class="variable">.rightBarButtonItem</span><span class="variable">.title</span> = <span class="string">@"完成"</span>;
-    }
-    <span class="keyword">self</span><span class="variable">.tableView</span><span class="variable">.editing</span> = !<span class="keyword">self</span><span class="variable">.tableView</span><span class="variable">.editing</span>;
-}
-</code></pre><h2 id="*_确定可以编辑的行数">* 确定可以编辑的行数</h2><p>可以根据条件返回YES/NO。我们这里设置为全部可以编辑。</p>
-<pre><code>- (<span class="built_in">BOOL</span>)tableView:(<span class="built_in">UITableView</span> *)tableView canEditRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath
-{
-    <span class="keyword">return</span> <span class="literal">YES</span>;
-}
-</code></pre><h2 id="*_确定编辑类型">* 确定编辑类型</h2><p>我们一般设置为删除。</p>
-<pre><code>- (<span class="built_in">UITableViewCellEditingStyle</span>)tableView:(<span class="built_in">UITableView</span> *)tableView editingStyleForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath
-{
-    <span class="keyword">return</span> <span class="built_in">UITableViewCellEditingStyleDelete</span>;
-}
-</code></pre><h2 id="*_处理编辑事件">* 处理编辑事件</h2><p><code>在处理事件时，一定要注意数据和界面保持一致，否则会崩溃</code></p>
-<pre><code>- (<span class="typename">void</span>)<span class="string">tableView:</span>(UITableView *)tableView <span class="string">commitEditingStyle:</span>(UITableViewCellEditingStyle)editingStyle <span class="string">forRowAtIndexPath:</span>(NSIndexPath *)indexPath
-{
-    <span class="comment">//该条数据是这个块中最后一条数据</span>
-    <span class="keyword">if</span> ([[self.dataArray <span class="string">objectAtIndex:</span>indexPath.section] count] == <span class="number">1</span>) {
-        <span class="comment">//删除数据</span>
-        [self.dataArray <span class="string">removeObjectAtIndex:</span>indexPath.section];
-        <span class="comment">//更新页面</span>
-        NSIndexSet *set = [NSIndexSet <span class="string">indexSetWithIndex:</span>indexPath.section];
-        [self.tableView <span class="string">deleteSections:</span>set <span class="string">withRowAnimation:</span>UITableViewRowAnimationRight];
-    }<span class="keyword">else</span>{
-        <span class="comment">//删除数据</span>
-        [[self.dataArray <span class="string">objectAtIndex:</span>indexPath.section] <span class="string">removeObjectAtIndex:</span>indexPath.row];
-        <span class="comment">//更新页面</span>
-        [self.tableView <span class="string">deleteRowsAtIndexPaths:</span>@[indexPath] <span class="string">withRowAnimation:</span>UITableViewRowAnimationRight];
-    }
-}
-</code></pre><h1 id="移动">移动</h1><p>移动有跨块移动和不跨块移动，我这里把两种情况写在了一起。</p>
-<p>同样的，移动也是分步骤的，步骤如下：</p>
-<ol>
-<li>设置页面为编辑状态。</li>
-<li>确定每行是否可以移动。</li>
-<li>处理移动事件</li>
-</ol>
-<h2 id="*_设置页面为编辑状态">* 设置页面为编辑状态</h2><p>同编辑过程中的第一步</p>
-<h2 id="*_确定每行是否可以移动">* 确定每行是否可以移动</h2><pre><code>- (<span class="built_in">BOOL</span>)tableView:(<span class="built_in">UITableView</span> *)tableView canMoveRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath
-{
-    <span class="keyword">return</span> <span class="literal">YES</span>;
-}
-</code></pre><h2 id="*_处理移动事件">* 处理移动事件</h2><pre><code>- (void)tableView:(UITableView *)tableView <span class="keyword">moveRowAtIndexPath:(NSIndexPath </span>*)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
-{
-    NSString *<span class="keyword">stringTemp </span>= [[<span class="keyword">self.dataArray </span>objectAtIndex:sourceIndexPath<span class="preprocessor">.section</span>] objectAtIndex:sourceIndexPath.row]<span class="comment">;</span>
+        <span itemprop="articleBody"><h1 id="简介">简介</h1><hr>
+<p>在处理Linux系统出现的各种故障时，故障的症状是最先发现的，而导致这以故障的原因才是最终排除故障的关键。熟悉Linux系统的日志管理，了解常见故障的分析与解决办法，将有助于管理员快速定位故障点。“对症下药”及时解决各种系统问题。</p>
+<a id="more"></a>
+<p>linux中总是会因为多多少少的原因导致命令输入错误，这个时候我们可以通过屏幕上显示的错误信息来解决，举个例子来说，假如想执行<code>apt-get</code>这个命令，但是命令行却显示的是</p>
+<pre><code>bash: apt-<span class="built_in">get</span>: <span class="command"><span class="keyword">command</span> <span class="title">not</span> <span class="title">found</span>    </span>
+</code></pre><p>字面上的意思是说指令找不到，所以说，系统上面可能并没有apt-get这个指令，通常出现<code>command not found</code>的可能原因为：</p>
+<ul>
+<li>这个指令不存在，因为该软件没有安装，解决方法就是安装该软件；</li>
+<li>这个指令所在的目录目前的用户并没有将它加入指令搜索路径中，请参考bash的PATH说明；</li>
+<li>只能说你打错指令了！！</li>
+</ul>
+<p>配置文件<code>/etc/syslog.conf</code>中，受syslogd服务管理的日志文件都是Linux系统中最主要的日志文件，他们记录了Linux系统中内核、用户认证、邮件、计划任务等最基本的系统消息。在Linux内核中，根据日志消息的重要程度不同，将其分为不同的优先级别（数字等级越小，优先级越高，消息越重要）。</p>
+<pre><code>&gt;<span class="number">0</span> <span class="function"><span class="title">EMERG</span><span class="params">(紧急)</span></span>：会导致主机系统不可用的情况。 
 
-    [[<span class="keyword">self.dataArray </span>objectAtIndex:sourceIndexPath<span class="preprocessor">.section</span>] removeObjectAtIndex:sourceIndexPath.row]<span class="comment">;</span>
-    [[<span class="keyword">self.dataArray </span>objectAtIndex:destinationIndexPath<span class="preprocessor">.section</span>] insertObject:<span class="keyword">stringTemp </span>atIndex:destinationIndexPath.row]<span class="comment">;</span>
+&gt;<span class="number">1</span> <span class="function"><span class="title">ALERT</span><span class="params">(警告)</span></span>：必须马上采取措施解决的问题。 
 
-    <span class="preprocessor">if</span> ([[<span class="keyword">self.dataArray </span>objectAtIndex:sourceIndexPath<span class="preprocessor">.section</span>] count] == <span class="number">0</span>) {
-        [<span class="keyword">self.dataArray </span>removeObjectAtIndex:sourceIndexPath<span class="preprocessor">.section</span>]<span class="comment">;</span>
-        [<span class="keyword">self.tableView </span>reloadData]<span class="comment">;</span>
-    }
-}
-</code></pre><h1 id="总结">总结</h1><p>在UITableView的操作中，唯一需要着重注意的就是数据要和视图一一对应，否则会造成UITableView的崩溃。</p>
-</span>
+&gt;<span class="number">2</span> CRIT（严重）：比较严重的情况。 
+
+&gt;<span class="number">3</span> ERR（错误）：运行出现错误。 
+
+&gt;<span class="number">4</span> <span class="function"><span class="title">WARNING</span><span class="params">(提醒)</span></span>：可能影响系统功能，需要提醒用户的重要事件。 
+
+&gt;<span class="number">5</span> <span class="function"><span class="title">NOTICE</span><span class="params">(注意)</span></span>：不会影响正常功能，但是需要注意的事件。 
+
+&gt;<span class="number">6</span> INFO (信息)：一般信息。 
+
+&gt;<span class="number">7</span> <span class="function"><span class="title">BEBUG</span><span class="params">(调试)</span></span>：程序或系统调试信息等。 
+</code></pre></span>
       
     </div>
 
@@ -320,11 +277,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/UI/" rel="tag">#UI</a>
-          
-            <a href="/tags/iOS/" rel="tag">#iOS</a>
-          
-            <a href="/tags/控件/" rel="tag">#控件</a>
+            <a href="/tags/linux基础/" rel="tag">#linux基础</a>
           
         </div>
       
@@ -333,16 +286,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2014/10/22/tableview/" rel="next" title="UITableView">
-                <i class="fa fa-chevron-left"></i> UITableView
+              <a href="/2014/11/25/如何写一篇hexo博客/" rel="next" title="如何写一篇hexo博客">
+                <i class="fa fa-chevron-left"></i> 如何写一篇hexo博客
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2014/10/24/CellReUse/" rel="prev" title="UITableView 中 cell 的自定义以及重用">
-                UITableView 中 cell 的自定义以及重用 <i class="fa fa-chevron-right"></i>
+              <a href="/2014/12/11/如何上传本地文件到github/" rel="prev" title="如何上传本地文件到github">
+                如何上传本地文件到github <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -450,7 +403,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#编辑"><span class="nav-number">1.</span> <span class="nav-text">编辑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#*_编辑当前页面为可编辑状态"><span class="nav-number">1.1.</span> <span class="nav-text">* 编辑当前页面为可编辑状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#*_确定可以编辑的行数"><span class="nav-number">1.2.</span> <span class="nav-text">* 确定可以编辑的行数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#*_确定编辑类型"><span class="nav-number">1.3.</span> <span class="nav-text">* 确定编辑类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#*_处理编辑事件"><span class="nav-number">1.4.</span> <span class="nav-text">* 处理编辑事件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#移动"><span class="nav-number">2.</span> <span class="nav-text">移动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#*_设置页面为编辑状态"><span class="nav-number">2.1.</span> <span class="nav-text">* 设置页面为编辑状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#*_确定每行是否可以移动"><span class="nav-number">2.2.</span> <span class="nav-text">* 确定每行是否可以移动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#*_处理移动事件"><span class="nav-number">2.3.</span> <span class="nav-text">* 处理移动事件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
