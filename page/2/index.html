@@ -192,99 +192,6 @@
             
             
               
-                <a class="post-title-link" href="/2015/03/19/简单玩转Hexo/" itemprop="url">
-                  简单玩转Hexo
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-03-19T14:06:53+08:00" content="2015-03-19">
-              2015-03-19
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/兴趣篇/" itemprop="url" rel="index">
-                    <span itemprop="name">兴趣篇</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h1 id="简介">简介</h1><hr>
-<p>Hexo是一个很好的博客，个人觉得他的界面干净利落，阅读体验也是很好。初次接触Hexo是在朋友的介绍下才知道的，hexo是需要手动搭建（觉得B格很高），在朋友的帮助下也终于是完成了。<br>开篇记录一下搭建的过程希望能帮助到浏览到这里的朋友<br>我的系统为OS X，windows也可以参考。</p>
-<p>hexo是一个基于Node.js的静态博客程序，可以方便的生成静态网页托管在github上。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/03/19/简单玩转Hexo/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 <a class="post-title-link" href="/2014/10/24/CellReUse/" itemprop="url">
                   UITableView 中 cell 的自定义以及重用
                 </a>
@@ -609,12 +516,28 @@
 
       
         
-          <p>最近搭起博客，不写点什么总觉得对不起自己搭博客的付出，所以今天写点东西，就从iOS开发中最常用的控件开始吧。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2014/10/21/first/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          <span itemprop="articleBody">
+            
+              <a id="more"></a>
+<h2 id="常用控件">常用控件</h2><p>在iOS中，常用控件如下<br><img src="/Image/ViewOfAll.png" alt="image icon"></p>
+<h3 id="其中，有几点总结">其中，有几点总结</h3><ul>
+<li>控件的初始化原则为：如果有自己的便利构造器，则使用便利构造器，否则使用alloc init方法。</li>
+<li>UIButton和UISegmentedControl有自己的初始化方法。</li>
+<li>控件在初始化之后需要为它设置位置和大小，即设置控件的frame。其中frame包含origin(x,y)和size(width,height)。切记，控件的frame要整体赋值。</li>
+<li>UIWindow是显示UI界面最基础的控件，相当于演员表演所需的舞台，舞台不存在，那么演员再多也没有存在的意义。理论上一个应用程序只需要一个window就可以完成需求，但是在特殊情况下，可以有多个window。</li>
+<li>所有继承自UIControl的控件都可以直接发出事件，我们可以根据需要捕获并处理这些事件。</li>
+<li>所有继承自UIScrollView的控件都是可以直接滚动的。</li>
+<li>在所有的控件中，有两个控件的用户交互默认是关闭的，它们是UILabel和UIImageView。</li>
+<li>UINavigationBar和UITabBar分别是两个重要的控制器UINavigationController和UITabBarController的重要组成部分。</li>
+<li>UITableView和UICollectionView是两个最重要的信息展示控件。</li>
+</ul>
+<p>暂时想到的就这些了，以后有机会再来补充</p>
+<h2 id="补充">补充</h2><ol>
+<li>UIAlertView和UIActionSheet现在已经合并为一个控件，叫作UIAlertController。</li>
+</ol>
+
+            
+          </span>
         
       
     </div>
@@ -1157,6 +1080,104 @@ tapGestureRecognizer<span class="variable">.numberOfTapsRequired</span> = <span 
 
 
     
+      
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                <a class="post-title-link" href="/2014/09/30/UISearchBar的使用方法详细/" itemprop="url">
+                  UISearchBar的使用方法详细
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2014-09-30T18:18:20+08:00" content="2014-09-30">
+              2014-09-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术篇/" itemprop="url" rel="index">
+                    <span itemprop="name">技术篇</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <pre><code> <span class="comment">// UISearchBar的常用方法 搜索框</span>
+<span class="built_in">UISearchBar</span> *oneSearchBar = [[<span class="built_in">UISearchBar</span> alloc] init];
+oneSearchBar<span class="variable">.frame</span> = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">320</span>, <span class="number">70</span>); <span class="comment">// 设置位置和大小</span>
+oneSearchBar<span class="variable">.keyboardType</span> = <span class="built_in">UIKeyboardTypeEmailAddress</span>; <span class="comment">// 设置弹出键盘的类型</span>
+oneSearchBar<span class="variable">.barStyle</span> = <span class="built_in">UIBarStyleBlackTranslucent</span>; <span class="comment">// 设置UISearchBar的样式</span>
+oneSearchBar<span class="variable">.tintColor</span> = [<span class="built_in">UIColor</span> redColor]; <span class="comment">// 设置UISearchBar的颜色 使用clearColor就是去掉背景</span>
+oneSearchBar<span class="variable">.placeholder</span> = <span class="string">@"请输入："</span>; <span class="comment">// 设置提示文字</span>
+</code></pre>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2014/09/30/UISearchBar的使用方法详细/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
@@ -1199,7 +1220,7 @@ tapGestureRecognizer<span class="variable">.numberOfTapsRequired</span> = <span 
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">39</span>
+              <span class="site-state-item-count">38</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

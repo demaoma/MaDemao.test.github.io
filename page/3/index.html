@@ -192,104 +192,6 @@
             
             
               
-                <a class="post-title-link" href="/2014/09/30/UISearchBar的使用方法详细/" itemprop="url">
-                  UISearchBar的使用方法详细
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2014-09-30T18:18:20+08:00" content="2014-09-30">
-              2014-09-30
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/技术篇/" itemprop="url" rel="index">
-                    <span itemprop="name">技术篇</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <pre><code> <span class="comment">// UISearchBar的常用方法 搜索框</span>
-<span class="built_in">UISearchBar</span> *oneSearchBar = [[<span class="built_in">UISearchBar</span> alloc] init];
-oneSearchBar<span class="variable">.frame</span> = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">320</span>, <span class="number">70</span>); <span class="comment">// 设置位置和大小</span>
-oneSearchBar<span class="variable">.keyboardType</span> = <span class="built_in">UIKeyboardTypeEmailAddress</span>; <span class="comment">// 设置弹出键盘的类型</span>
-oneSearchBar<span class="variable">.barStyle</span> = <span class="built_in">UIBarStyleBlackTranslucent</span>; <span class="comment">// 设置UISearchBar的样式</span>
-oneSearchBar<span class="variable">.tintColor</span> = [<span class="built_in">UIColor</span> redColor]; <span class="comment">// 设置UISearchBar的颜色 使用clearColor就是去掉背景</span>
-oneSearchBar<span class="variable">.placeholder</span> = <span class="string">@"请输入："</span>; <span class="comment">// 设置提示文字</span>
-</code></pre>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2014/09/30/UISearchBar的使用方法详细/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 <a class="post-title-link" href="/2014/09/29/UITextView的使用方法详细/" itemprop="url">
                   UITextView的使用方法详细
                 </a>
@@ -1123,6 +1025,108 @@ oneSwitch<span class="variable">.thumbTintColor</span> = [<span class="built_in"
 
 
     
+      
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                <a class="post-title-link" href="/2014/09/21/UISlider的使用方法详细/" itemprop="url">
+                  UISlider的使用方法详细
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2014-09-21T17:57:05+08:00" content="2014-09-21">
+              2014-09-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术篇/" itemprop="url" rel="index">
+                    <span itemprop="name">技术篇</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <pre><code><span class="comment">// UISlider的常用方法</span>
+UISlider *oneSlider = [[UISlider alloc] init];
+
+<span class="comment">// 最常用</span>
+oneSlider.frame = CGRectMake(<span class="number">10</span>, <span class="number">20</span>, <span class="number">300</span>, <span class="number">30</span>); <span class="comment">// 设置位置和大小 注意：UISlider的高度可以随便设置，因为是不会变的</span>
+oneSlider.value = <span class="number">30</span>; <span class="comment">// 初始值</span>
+oneSlider.minimumValue = <span class="number">0</span>; <span class="comment">// 最小值</span>
+oneSlider.maximumValue = <span class="number">100</span>; <span class="comment">// 最大值</span>
+oneSlider.backgroundColor = [UIColor blueColor]; <span class="comment">// 设置背景颜色</span>
+oneSlider.alpha = <span class="number">0.9</span>; <span class="comment">// 设置透明度</span>
+oneSlider.tag = <span class="number">1001</span>; <span class="comment">// 设置标签，常用在委托中</span>
+</code></pre>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2014/09/21/UISlider的使用方法详细/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
@@ -1165,7 +1169,7 @@ oneSwitch<span class="variable">.thumbTintColor</span> = [<span class="built_in"
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">39</span>
+              <span class="site-state-item-count">38</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
